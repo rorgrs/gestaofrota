@@ -1,5 +1,4 @@
 ﻿using System;
-using Backend.Domain.DTOs;
 using Backend.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,11 +11,11 @@ namespace Backend.API.Controllers;
 [Route("[controller]")]
 public class VeiculoController : ControllerBase
 {
-    private readonly IVeiculoService _VeiculoService;
+    private readonly IVeiculoService _veiculoService;
 
-    public VeiculoController(IVeiculoService VeiculoService)
+    public VeiculoController(IVeiculoService veiculoService)
     {
-        _VeiculoService = VeiculoService;
+        _veiculoService = veiculoService;
     }
 
     [HttpGet]
@@ -24,7 +23,7 @@ public class VeiculoController : ControllerBase
     {
         try
         {
-            var result = await _VeiculoService.GetAll();
+            var result = await _veiculoService.GetAll();
             return Ok(result);
         }
         catch (Exception e)
@@ -38,7 +37,7 @@ public class VeiculoController : ControllerBase
     {
         try
         {
-            var result = await _VeiculoService.Get(id);
+            var result = await _veiculoService.Get(id);
             return Ok(result);
         }
         catch (Exception e)
@@ -51,7 +50,7 @@ public class VeiculoController : ControllerBase
     public async Task<ActionResult<VeiculoResponse>> Save([FromBody] VeiculoRequest request)
     {try
         {
-            var result = await _VeiculoService.Save(request);
+            var result = await _veiculoService.Save(request);
             return Ok(result);
         }
         catch (Exception e)

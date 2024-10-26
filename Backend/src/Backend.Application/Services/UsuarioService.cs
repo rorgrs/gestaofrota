@@ -1,6 +1,5 @@
 ﻿using System;
 using AutoMapper;
-using Backend.Domain.DTOs;
 using Backend.Domain.Entities;
 using Backend.Domain.Services;
 using System.Collections.Generic;
