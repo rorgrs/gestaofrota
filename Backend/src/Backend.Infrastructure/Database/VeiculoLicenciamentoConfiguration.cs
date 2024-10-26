@@ -20,5 +20,10 @@ public class VeiculoLicenciamentoConfiguration : IEntityTypeConfiguration<Veicul
             .WithMany()
             .IsRequired(false)
             .HasForeignKey(c => c.IdUsuarioAlteracao);
+
+        builder.HasOne(c => c.Veiculo)
+            .WithMany()
+            .IsRequired()
+            .HasForeignKey(c => c.IdVeiculo);
     }
 }
