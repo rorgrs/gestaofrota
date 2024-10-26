@@ -12,10 +12,14 @@ public class BackendContext : DbContext
 
     public DbSet<Usuario> Usuario { get; set; }
     public DbSet<Veiculo> Veiculo { get; set; }
+    public DbSet<VeiculoLicenciamento> VeiculoLicenciamento { get; set; }
+    public DbSet<VeiculoManutencao> VeiculoManutencao { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
         modelBuilder.ApplyConfiguration(new VeiculoConfiguration());
+        modelBuilder.ApplyConfiguration(new VeiculoLicenciamentoConfiguration());
+        modelBuilder.ApplyConfiguration(new VeiculoManutencaoConfiguration());
     }
 }
