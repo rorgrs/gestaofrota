@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Backend.Domain.DTOs.Validators;
+namespace Backend.Domain.DTOs.Usuario.Validators;
 
 public class UsuarioResponseValidator : AbstractValidator<UsuarioResponse>
 {

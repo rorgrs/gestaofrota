@@ -11,18 +11,11 @@ public class BackendContext : DbContext
     }
 
     public DbSet<Usuario> Usuario { get; set; }
+    public DbSet<Veiculo> Veiculo { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
-
-        modelBuilder.Seed();
-    }
-}
-
-public static class ModelBuilderExtensions
-{
-    public static void Seed(this ModelBuilder modelBuilder)
-    {
+        modelBuilder.ApplyConfiguration(new VeiculoConfiguration());
     }
 }

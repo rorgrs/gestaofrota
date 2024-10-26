@@ -5,6 +5,7 @@ using Backend.Domain.Entities;
 using Backend.Domain.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Backend.Domain.DTOs.Usuario;
 using Backend.Domain.Repositories;
 
 namespace Backend.Application.Services;

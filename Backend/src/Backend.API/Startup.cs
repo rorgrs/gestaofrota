@@ -90,7 +90,6 @@ public class Startup
     private static void ConfigureDepdendencyInjection(IServiceCollection services)
     {
         services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));   
-        services.AddScoped(typeof(IUsuarioService), typeof(UsuarioService));   
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));   
     }
 }

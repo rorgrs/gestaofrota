@@ -1,4 +1,4 @@
-﻿namespace Backend.Domain.DTOs;
+﻿namespace Backend.Domain.DTOs.Usuario;
 
 public class UsuarioRequest
 {

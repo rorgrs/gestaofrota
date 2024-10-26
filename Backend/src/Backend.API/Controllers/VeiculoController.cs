@@ -4,27 +4,27 @@ using Backend.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Backend.Domain.DTOs.Usuario;
+using Backend.Domain.DTOs.Veiculo;
 
 namespace Backend.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UsuarioController : ControllerBase
+public class VeiculoController : ControllerBase
 {
-    private readonly IUsuarioService _usuarioService;
+    private readonly IVeiculoService _VeiculoService;
 
-    public UsuarioController(IUsuarioService usuarioService)
+    public VeiculoController(IVeiculoService VeiculoService)
     {
-        _usuarioService = usuarioService;
+        _VeiculoService = VeiculoService;
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<UsuarioResponse>>> GetAll()
+    public async Task<ActionResult<List<VeiculoResponse>>> GetAll()
     {
         try
         {
-            var result = await _usuarioService.GetAll();
+            var result = await _VeiculoService.GetAll();
             return Ok(result);
         }
         catch (Exception e)
@@ -34,11 +34,11 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UsuarioResponse>> Get(int id)
+    public async Task<ActionResult<VeiculoResponse>> Get(int id)
     {
         try
         {
-            var result = await _usuarioService.Get(id);
+            var result = await _VeiculoService.Get(id);
             return Ok(result);
         }
         catch (Exception e)
@@ -48,10 +48,10 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<UsuarioResponse>> Save([FromBody] UsuarioRequest request)
+    public async Task<ActionResult<VeiculoResponse>> Save([FromBody] VeiculoRequest request)
     {try
         {
-            var result = await _usuarioService.Save(request);
+            var result = await _VeiculoService.Save(request);
             return Ok(result);
         }
         catch (Exception e)

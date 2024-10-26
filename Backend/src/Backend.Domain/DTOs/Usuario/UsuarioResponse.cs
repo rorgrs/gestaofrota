@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Backend.Domain.DTOs;
+namespace Backend.Domain.DTOs.Usuario;
 
 public class UsuarioResponse
 {

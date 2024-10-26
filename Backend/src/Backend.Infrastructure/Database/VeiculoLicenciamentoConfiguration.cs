@@ -5,9 +5,9 @@ using System;
 
 namespace Backend.Infrastructure.Database;
 
-public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
+public class VeiculoLicenciamentoConfiguration : IEntityTypeConfiguration<VeiculoLicenciamento>
 {
-    public void Configure(EntityTypeBuilder<Usuario> builder)
+    public void Configure(EntityTypeBuilder<VeiculoLicenciamento> builder)
     {
         builder.HasKey(c => c.Id);
 
