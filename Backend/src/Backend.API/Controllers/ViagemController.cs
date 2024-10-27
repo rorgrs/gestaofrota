@@ -60,6 +60,21 @@ public class ViagemController : ControllerBase
         }
     }
     
+
+    [HttpPost("{id}/parada")]
+    public async Task<ActionResult> AddParada(int id, [FromBody] ViagemParadaRequest request)
+    {
+        try
+        {
+            await _viagemService.AddParada(id, request);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
     [HttpPut("{id}")]
     public async Task<ActionResult<ViagemResponse>> Edit(int id, [FromBody] ViagemRequest request)
     {

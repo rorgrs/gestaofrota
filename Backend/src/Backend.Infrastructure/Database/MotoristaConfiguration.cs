@@ -24,5 +24,15 @@ public class MotoristaConfiguration : IEntityTypeConfiguration<Motorista>
             .WithMany()
             .IsRequired(false)
             .HasForeignKey(c => c.IdEscalaTrabalho);
+        
+        builder.HasMany(c => c.Folgas)
+            .WithOne(c => c.Motorista)
+            .IsRequired(false)
+            .HasForeignKey(c => c.IdMotorista);
+        
+        builder.HasMany(c => c.Carteiras)
+            .WithOne(c => c.Motorista)
+            .IsRequired(false)
+            .HasForeignKey(c => c.IdMotorista);
     }
 }

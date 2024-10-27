@@ -21,7 +21,7 @@ public class MotoristaFolgaConfiguration : IEntityTypeConfiguration<MotoristaFol
             .HasForeignKey(c => c.IdUsuarioAlteracao);
         
         builder.HasOne(c => c.Motorista)
-            .WithMany()
+            .WithMany(c => c.Folgas)
             .IsRequired()
             .HasForeignKey(c => c.IdMotorista);
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Domain.Entities;
@@ -38,6 +39,8 @@ public class Viagem : BaseEntity
     #region Propriedades de Navegacao
     
     public virtual Veiculo? Veiculo { get; set; }
+    
+    public virtual ICollection<ViagemParada>? Paradas { get; set; }
     
     #endregion
 }

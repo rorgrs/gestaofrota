@@ -24,5 +24,10 @@ public class ViagemConfiguration : IEntityTypeConfiguration<Viagem>
             .WithMany()
             .IsRequired()
             .HasForeignKey(c => c.IdVeiculo);
+
+        builder.HasMany(c => c.Paradas)
+            .WithOne(c => c.Viagem)
+            .IsRequired(false)
+            .HasForeignKey(c => c.IdViagem);
     }
 }

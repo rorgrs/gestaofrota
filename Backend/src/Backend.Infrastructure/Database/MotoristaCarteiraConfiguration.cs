@@ -10,6 +10,8 @@ public class MotoristaCarteiraConfiguration : IEntityTypeConfiguration<Motorista
     {
         builder.HasKey(c => c.Id);
 
+        builder.Property(c => c.DataAlteracao).HasColumnType("datetime2");
+
         builder.HasOne(c => c.UsuarioCadastro)
             .WithMany()
             .IsRequired(false)
@@ -21,7 +23,7 @@ public class MotoristaCarteiraConfiguration : IEntityTypeConfiguration<Motorista
             .HasForeignKey(c => c.IdUsuarioAlteracao);
         
         builder.HasOne(c => c.Motorista)
-            .WithMany()
+            .WithMany(c => c.Carteiras)
             .IsRequired()
             .HasForeignKey(c => c.IdMotorista);
     }

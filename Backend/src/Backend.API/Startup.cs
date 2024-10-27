@@ -1,3 +1,4 @@
+using System;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Backend.Domain.Services;
@@ -37,6 +38,8 @@ public class Startup
         services.AddDbContext<BackendContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("BackendContext")));
         
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         services.AddAutoMapper(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
             
         ConfigureDepdendencyInjection(services);
@@ -94,6 +97,18 @@ public class Startup
         services.AddScoped(typeof(IUsuarioService), typeof(UsuarioService));
         services.AddScoped(typeof(IVeiculoService), typeof(VeiculoService));
         services.AddScoped(typeof(IViagemService), typeof(ViagemService));
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));   
+        
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped(typeof(IMotoristaRepository), typeof(MotoristaRepository));
+        services.AddScoped(typeof(IMotoristaCarteiraRepository), typeof(MotoristaCarteiraRepository));
+        services.AddScoped(typeof(IMotoristaFolgaRepository), typeof(MotoristaFolgaRepository));
+        services.AddScoped(typeof(IMotoristaFolgaRepository), typeof(MotoristaFolgaRepository));
+        services.AddScoped(typeof(IMotoristaEscalaTrabalhoRepository), typeof(MotoristaEscalaTrabalhoRepository));
+        services.AddScoped(typeof(IVeiculoRepository), typeof(VeiculoRepository));
+        services.AddScoped(typeof(IVeiculoManutencaoRepository), typeof(VeiculoManutencaoRepository));
+        services.AddScoped(typeof(IVeiculoLicenciamentoRepository), typeof(VeiculoLicenciamentoRepository));
+        services.AddScoped(typeof(IViagemRepository), typeof(ViagemRepository));
+        services.AddScoped(typeof(IViagemParadaRepository), typeof(ViagemParadaRepository));
+        services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
     }
 }

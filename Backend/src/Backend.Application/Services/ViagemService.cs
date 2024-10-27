@@ -12,8 +12,10 @@ namespace Backend.Application.Services;
 
 public class ViagemService : BaseService<Viagem>, IViagemService
 {
-    public ViagemService(IMapper mapper, IViagemRepository repository) : base(mapper, repository)
+    private readonly IViagemParadaRepository _viagemParadaRepository;
+    public ViagemService(IMapper mapper, IViagemRepository repository, IViagemParadaRepository viagemParadaRepository) : base(mapper, repository)
     {
+        _viagemParadaRepository = viagemParadaRepository;
     }
 
     public async Task<ViagemResponse> Save(ViagemRequest request)
@@ -24,6 +26,19 @@ public class ViagemService : BaseService<Viagem>, IViagemService
         await Repository.AddAsync(entity);
         await Repository.SaveAsync();
         return Mapper.Map<ViagemResponse>(entity);
+    }
+
+    public async Task AddParada(int id, ViagemParadaRequest request)
+    {
+        var viagem = await Repository.GetById(id).FirstOrDefaultAsync();
+        if (viagem == null) throw new InvalidOperationException("Cadastro não encontrado.");
+        
+        var entity = Mapper.Map<ViagemParada>(request);
+        entity.DataCadastro = DateTime.Now;
+        entity.IdViagem = id;
+
+        await _viagemParadaRepository.AddAsync(entity);
+        await _viagemParadaRepository.SaveAsync();
     }
 
     public async Task<ViagemResponse> Edit(int id, ViagemRequest request)
@@ -43,7 +58,10 @@ public class ViagemService : BaseService<Viagem>, IViagemService
     
     public async Task<ViagemResponse> Get(int id)
     {
-        var viagem = await Repository.GetById(id).Include(c => c.Veiculo).FirstOrDefaultAsync();
+        var viagem = await Repository.GetById(id)
+            .Include(c => c.Veiculo)
+            .Include(c => c.Paradas)
+            .FirstOrDefaultAsync();
         if (viagem == null) throw new InvalidOperationException("Cadastro não encontrado.");
         return Mapper.Map<ViagemResponse>(viagem);
     }

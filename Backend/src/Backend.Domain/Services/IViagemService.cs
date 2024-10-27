@@ -8,6 +8,7 @@ namespace Backend.Domain.Services;
 public interface IViagemService : IBaseService<Viagem>
 {
     Task<ViagemResponse> Save(ViagemRequest request);
+    Task AddParada(int id, ViagemParadaRequest request);
     Task<ViagemResponse> Edit(int id, ViagemRequest request);
     Task<ViagemResponse> Get(int id);
     Task<List<ViagemResponse>> GetAll();

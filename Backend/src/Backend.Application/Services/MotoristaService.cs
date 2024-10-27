@@ -68,7 +68,10 @@ public class MotoristaService : BaseService<Motorista>, IMotoristaService
 
     public async Task<MotoristaResponse> Get(int id)
     {
-        var entity = await Repository.GetById(id).FirstOrDefaultAsync();
+        var entity = await Repository.GetById(id)
+            .Include(c => c.Carteiras)
+            .Include(c => c.Folgas)
+            .FirstOrDefaultAsync();
         if (entity == null) throw new InvalidOperationException("Cadastro não encontrado.");
         return Mapper.Map<MotoristaResponse>(entity);
     }

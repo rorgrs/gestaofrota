@@ -6,7 +6,7 @@ namespace Backend.Domain.Entities;
 public class BaseEntity
 {
     [Column("id")] 
-    public int Id { get; set; }
+    public required int Id { get; set; }
     
     [Column("id_usuario_cadastro")]
     public int? IdUsuarioCadastro { get; set; }

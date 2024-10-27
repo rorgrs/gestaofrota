@@ -14,23 +14,23 @@ public class MotoristaResponse
     public string? Email { get; set; }
     public EStatusTreinamentoMotorista? StatusTreinamento { get; set; }
     public MotoristaEscalaTrabalhoResponse? EscalaTrabalho { get; set; }
-    public MotoristaCnhResponse? Cnh { get; set; }
+    public List<MotoristaCarteiraResponse>? Carteiras { get; set; }
     public List<MotoristaFolgaResponse>? Folgas { get; set; }
 }
 public class MotoristaEscalaTrabalhoResponse
 {
-    public DateTime? DataInicio { get; set; }
-    public DateTime? DataFim { get; set; }
+    public required DateTime DataInicio { get; set; }
+    public required DateTime DataFim { get; set; }
 }
-public class MotoristaCnhResponse
+public class MotoristaCarteiraResponse
 {
-    public string? Cnh { get; set; }
-    public DateTime? DataVencimento { get; set; }
+    public required string Cnh { get; set; }
+    public required DateTime DataVencimento { get; set; }
 }
 public class MotoristaFolgaResponse
 {
-    public DateTime? DataInicio { get; set; }
-    public DateTime? DataFim { get; set; }
+    public required DateTime DataInicio { get; set; }
+    public required DateTime DataFim { get; set; }
 }
 
 

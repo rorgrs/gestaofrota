@@ -21,7 +21,7 @@ public class ViagemParadaConfiguration : IEntityTypeConfiguration<ViagemParada>
             .HasForeignKey(c => c.IdUsuarioAlteracao);
 
         builder.HasOne(c => c.Viagem)
-            .WithMany()
+            .WithMany(c => c.Paradas)
             .IsRequired()
             .HasForeignKey(c => c.IdViagem);
     }

@@ -40,6 +40,7 @@ public class MappingProfile : Profile
         CreateMap<MotoristaEscalaTrabalhoResponse, MotoristaEscalaTrabalho>().ReverseMap();
         CreateMap<MotoristaFolgaRequest, MotoristaFolga>().ReverseMap();
         CreateMap<MotoristaFolgaResponse, MotoristaFolga>().ReverseMap();
+        CreateMap<MotoristaCarteiraResponse, MotoristaCarteira>().ReverseMap();
         
         #endregion
 
@@ -48,6 +49,7 @@ public class MappingProfile : Profile
         CreateMap<ViagemRequest, Viagem>().ReverseMap();
         CreateMap<ViagemResponse, Viagem>().ReverseMap();
         CreateMap<ViagemVeiculoResponse, Veiculo>().ReverseMap();
+        CreateMap<ViagemParadaResponse, ViagemParada>().ReverseMap();
 
         #endregion
     }
