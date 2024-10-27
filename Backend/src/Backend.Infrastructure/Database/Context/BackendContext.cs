@@ -1,7 +1,7 @@
 ﻿using Backend.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Infrastructure.Database;
+namespace Backend.Infrastructure.Database.Context;
 
 public class BackendContext : DbContext
 {
@@ -18,7 +18,8 @@ public class BackendContext : DbContext
     public DbSet<MotoristaEscalaTrabalho> MotoristaEscalaTrabalho { get; set; }
     public DbSet<MotoristaFolga> MotoristaFolga { get; set; }
     public DbSet<MotoristaCarteira> MotoristaCarteira { get; set; }
-    
+    public DbSet<Viagem> Viagem { get; set; }
+    public DbSet<ViagemParada> ViagemParada { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,5 +31,7 @@ public class BackendContext : DbContext
         modelBuilder.ApplyConfiguration(new MotoristaEscalaTrabalhoConfiguration());
         modelBuilder.ApplyConfiguration(new MotoristaFolgaConfiguration());
         modelBuilder.ApplyConfiguration(new MotoristaCarteiraConfiguration());
+        modelBuilder.ApplyConfiguration(new ViagemConfiguration());
+        modelBuilder.ApplyConfiguration(new ViagemParadaConfiguration());
     }
 }

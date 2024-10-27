@@ -1,5 +1,4 @@
 ﻿using System;
-using Backend.Domain.Enum;
 
 namespace Backend.Domain.DTOs.Motorista;
 

@@ -1,13 +1,12 @@
-﻿using Backend.Domain.Entities;
+﻿#nullable enable
+using Backend.Domain.Entities;
 using Backend.Domain.Repositories;
-using Backend.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Backend.Infrastructure.Database;
+using Backend.Infrastructure.Database.Context;
 
 namespace Backend.Infrastructure.Repositories;
 
@@ -38,8 +37,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
     public async Task DeleteAsync(TEntity entity) => 
         await Task.Run(() => { Delete(entity); });
 
-    public virtual async Task<int> CountAsync(IEnumerable<Expression<Func<TEntity, bool>>> predicates = null) =>
-        await _backendContext.Set<TEntity>().Filter(predicates).CountAsync();
+    public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        var q = _backendContext.Set<TEntity>();
+        if (predicate == null) return await q.CountAsync();
+        return await q.CountAsync(predicate);
+    }
 
     public async Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate) =>
         await _backendContext.Set<TEntity>().AnyAsync(predicate);
@@ -47,7 +50,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
     public IQueryable<TEntity> GetById(int id) =>
         _backendContext.Set<TEntity>().Where(c => c.Id == id);
 
-    public IQueryable<TEntity> GetAll(IEnumerable<Expression<Func<TEntity, bool>>> predicates) =>
-        _backendContext.Set<TEntity>().Filter(predicates);
+    public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        var q = _backendContext.Set<TEntity>();
+        if (predicate == null) return q;
+        return q.Where(predicate);
+    }
+        
 
 }

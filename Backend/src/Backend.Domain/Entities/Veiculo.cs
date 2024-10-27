@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Backend.Domain.Enum;
@@ -39,6 +39,8 @@ public class Veiculo : BaseEntity
     #region Propriedades de Navegacao
     
     public virtual Motorista? Motorista { get; set; }
+    public virtual ICollection<VeiculoLicenciamento>? Licenciamentos { get; set; }
+    public virtual ICollection<VeiculoManutencao>? Manutencoes { get; set; }
     
     #endregion
 }

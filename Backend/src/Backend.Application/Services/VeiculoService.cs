@@ -12,8 +12,13 @@ namespace Backend.Application.Services;
 
 public class VeiculoService : BaseService<Veiculo>, IVeiculoService
 {
-    public VeiculoService(IMapper mapper, IVeiculoRepository repository) : base(mapper, repository)
+    private readonly IVeiculoLicenciamentoRepository _veiculoLicenciamentoRepository;
+    private readonly IVeiculoManutencaoRepository _veiculoManutencaoRepository;
+    
+    public VeiculoService(IMapper mapper, IVeiculoRepository repository, IVeiculoLicenciamentoRepository veiculoLicenciamentoRepository, IVeiculoManutencaoRepository veiculoManutencaoRepository) : base(mapper, repository)
     {
+        _veiculoLicenciamentoRepository = veiculoLicenciamentoRepository;
+        _veiculoManutencaoRepository = veiculoManutencaoRepository;
     }
 
     public async Task<VeiculoResponse> Save(VeiculoRequest request)
@@ -38,13 +43,16 @@ public class VeiculoService : BaseService<Veiculo>, IVeiculoService
 
         await Repository.UpdateAsync(entity);
         await Repository.SaveAsync();
-        return Mapper.Map<VeiculoResponse>(entity);
+        return await Get(id);
     }
     
     public async Task<VeiculoResponse> Get(int id)
     {
-        var veiculo = await Repository.GetById(id).FirstOrDefaultAsync();
-        if (veiculo == null) throw new InvalidOperationException("Veículo não encontrado.");
+        var veiculo = await Repository.GetById(id)
+            .Include(c => c.Licenciamentos)
+            .Include(c => c.Manutencoes)
+            .FirstOrDefaultAsync();
+        if (veiculo == null) throw new InvalidOperationException("Cadastro não encontrado.");
         return Mapper.Map<VeiculoResponse>(veiculo);
     }
 

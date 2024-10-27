@@ -13,7 +13,7 @@ using System.Reflection;
 using Backend.API.Middlewares;
 using Backend.Application.Services;
 using Backend.Domain.Repositories;
-using Backend.Infrastructure.Database;
+using Backend.Infrastructure.Database.Context;
 using Backend.Infrastructure.Repositories;
 
 namespace Backend.API;

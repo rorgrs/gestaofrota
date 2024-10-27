@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -14,8 +13,8 @@ public interface IRepository<TEntity> where TEntity : class
     Task UpdateAsync(TEntity entity);
     void Delete(TEntity entity);
     Task DeleteAsync(TEntity entity);
-    Task<int> CountAsync(IEnumerable<Expression<Func<TEntity, bool>>>? predicates = null);
+    Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null);
     Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate);
     IQueryable<TEntity> GetById(int id);
-    IQueryable<TEntity> GetAll(IEnumerable<Expression<Func<TEntity, bool>>>? predicates = null);
+    IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null);
 }

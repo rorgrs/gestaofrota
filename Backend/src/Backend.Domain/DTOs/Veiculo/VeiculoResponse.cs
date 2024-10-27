@@ -13,7 +13,7 @@ public class VeiculoResponse
     public string? Cor { get; set; }
     public double? KmLitro { get; set; }
     public int? Ano { get; set; }
-    public VeiculoLicenciamentoResponse? Licenciamento { get; set; }
+    public List<VeiculoLicenciamentoResponse>? Licenciamentos { get; set; }
     public List<VeiculoManutencaoResponse>? Manutencoes { get; set; }
 }
 

@@ -1,7 +1,6 @@
 ﻿using Backend.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace Backend.Infrastructure.Database;
 
@@ -22,7 +21,7 @@ public class VeiculoLicenciamentoConfiguration : IEntityTypeConfiguration<Veicul
             .HasForeignKey(c => c.IdUsuarioAlteracao);
 
         builder.HasOne(c => c.Veiculo)
-            .WithMany()
+            .WithMany(c => c.Licenciamentos)
             .IsRequired()
             .HasForeignKey(c => c.IdVeiculo);
     }

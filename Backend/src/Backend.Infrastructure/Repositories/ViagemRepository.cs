@@ -4,9 +4,9 @@ using Backend.Infrastructure.Database.Context;
 
 namespace Backend.Infrastructure.Repositories;
 
-public class MotoristaFolgaRepository : Repository<MotoristaFolga>, IMotoristaFolgaRepository
+public class ViagemRepository : Repository<Viagem>, IViagemRepository
 {
-    public MotoristaFolgaRepository(BackendContext context) : base (context)
+    public ViagemRepository(BackendContext context) : base (context)
     {
     }
 }

@@ -1,4 +1,4 @@
-using Backend.Infrastructure.Database;
+using Backend.Infrastructure.Database.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

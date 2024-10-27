@@ -1,6 +1,6 @@
 ﻿using Backend.Domain.Entities;
 using Backend.Domain.Repositories;
-using Backend.Infrastructure.Database;
+using Backend.Infrastructure.Database.Context;
 
 namespace Backend.Infrastructure.Repositories;
 

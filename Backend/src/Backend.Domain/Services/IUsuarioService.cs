@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Backend.Domain.DTOs;
 using Backend.Domain.DTOs.Usuario;
 using Backend.Domain.Entities;
 

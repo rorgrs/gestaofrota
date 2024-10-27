@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Backend.Infrastructure.Database;
 
-public class VeiculoManutencaoConfiguration : IEntityTypeConfiguration<VeiculoManutencao>
+public class ViagemConfiguration : IEntityTypeConfiguration<Viagem>
 {
-    public void Configure(EntityTypeBuilder<VeiculoManutencao> builder)
+    public void Configure(EntityTypeBuilder<Viagem> builder)
     {
         builder.HasKey(c => c.Id);
 
@@ -21,7 +21,7 @@ public class VeiculoManutencaoConfiguration : IEntityTypeConfiguration<VeiculoMa
             .HasForeignKey(c => c.IdUsuarioAlteracao);
 
         builder.HasOne(c => c.Veiculo)
-            .WithMany(c => c.Manutencoes)
+            .WithMany()
             .IsRequired()
             .HasForeignKey(c => c.IdVeiculo);
     }

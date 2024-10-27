@@ -2,6 +2,7 @@
 using Backend.Domain.DTOs.Motorista;
 using Backend.Domain.DTOs.Usuario;
 using Backend.Domain.DTOs.Veiculo;
+using Backend.Domain.DTOs.Viagem;
 using Backend.Domain.Entities;
 
 namespace Backend.Infrastructure.Mapper;
@@ -41,7 +42,13 @@ public class MappingProfile : Profile
         CreateMap<MotoristaFolgaResponse, MotoristaFolga>().ReverseMap();
         
         #endregion
+
+        #region Viagem
         
-        
+        CreateMap<ViagemRequest, Viagem>().ReverseMap();
+        CreateMap<ViagemResponse, Viagem>().ReverseMap();
+        CreateMap<ViagemVeiculoResponse, Veiculo>().ReverseMap();
+
+        #endregion
     }
 }
