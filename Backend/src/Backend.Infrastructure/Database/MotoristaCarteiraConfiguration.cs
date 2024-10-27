@@ -1,13 +1,13 @@
-﻿using Backend.Domain.Entities;
+using Backend.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
 namespace Backend.Infrastructure.Database;
 
-public class VeiculoConfiguration : IEntityTypeConfiguration<Veiculo>
+public class MotoristaCarteiraConfiguration : IEntityTypeConfiguration<MotoristaCarteira>
 {
-    public void Configure(EntityTypeBuilder<Veiculo> builder)
+    public void Configure(EntityTypeBuilder<MotoristaCarteira> builder)
     {
         builder.HasKey(c => c.Id);
 
@@ -20,10 +20,10 @@ public class VeiculoConfiguration : IEntityTypeConfiguration<Veiculo>
             .WithMany()
             .IsRequired(false)
             .HasForeignKey(c => c.IdUsuarioAlteracao);
-
+        
         builder.HasOne(c => c.Motorista)
             .WithMany()
-            .IsRequired(false)
+            .IsRequired()
             .HasForeignKey(c => c.IdMotorista);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Backend.Domain.DTOs;
 using Backend.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -49,9 +48,24 @@ public class UsuarioController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<UsuarioResponse>> Save([FromBody] UsuarioRequest request)
-    {try
+    {
+        try
         {
             var result = await _usuarioService.Save(request);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<UsuarioResponse>> Edit(int id, [FromBody] UsuarioRequest request)
+    {
+        try
+        {
+            var result = await _usuarioService.Edit(id, request);
             return Ok(result);
         }
         catch (Exception e)

@@ -8,6 +8,7 @@ namespace Backend.Domain.Services;
 public interface IVeiculoService : IBaseService<Veiculo>
 {
     Task<VeiculoResponse> Save(VeiculoRequest request);
+    Task<VeiculoResponse> Edit(int id, VeiculoRequest request);
     Task<VeiculoResponse> Get(int id);
     Task<List<VeiculoResponse>> GetAll();
 }

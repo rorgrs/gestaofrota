@@ -16,6 +16,8 @@ public class BackendContext : DbContext
     public DbSet<VeiculoManutencao> VeiculoManutencao { get; set; }
     public DbSet<Motorista> Motorista { get; set; }
     public DbSet<MotoristaEscalaTrabalho> MotoristaEscalaTrabalho { get; set; }
+    public DbSet<MotoristaFolga> MotoristaFolga { get; set; }
+    public DbSet<MotoristaCarteira> MotoristaCarteira { get; set; }
     
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,5 +28,7 @@ public class BackendContext : DbContext
         modelBuilder.ApplyConfiguration(new VeiculoManutencaoConfiguration());
         modelBuilder.ApplyConfiguration(new MotoristaConfiguration());
         modelBuilder.ApplyConfiguration(new MotoristaEscalaTrabalhoConfiguration());
+        modelBuilder.ApplyConfiguration(new MotoristaFolgaConfiguration());
+        modelBuilder.ApplyConfiguration(new MotoristaCarteiraConfiguration());
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Backend.Domain.DTOs;
 using Backend.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -48,11 +47,40 @@ public class MotoristaController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<MotoristaResponse>> Save([FromBody] MotoristaRequest request)
-    {try
+    public async Task<ActionResult<MotoristaResponse>> Add([FromBody] MotoristaRequest request)
+    {
+        try
         {
             var result = await _motoristaService.Save(request);
             return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<MotoristaResponse>> Edit(int id, [FromBody] MotoristaRequest request)
+    {
+        try
+        {
+            var result = await _motoristaService.Edit(id, request);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPost("{id}/folga")]
+    public async Task<ActionResult> AddFolga(int id, [FromBody] MotoristaFolgaRequest request)
+    {
+        try
+        {
+            await _motoristaService.AddFolga(id, request);
+            return Ok();
         }
         catch (Exception e)
         {

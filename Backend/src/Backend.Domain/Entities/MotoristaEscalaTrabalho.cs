@@ -9,9 +9,9 @@ namespace Backend.Domain.Entities;
 public class MotoristaEscalaTrabalho : BaseEntity
 {
     [Column("horario_inicio")]
-    public required DateTime HorarioInicio { get; set; }
+    public required string HorarioInicio { get; set; } //08:00
     
     [Column("horario_fim")]
-    public required DateTime HorarioFim { get; set; }
+    public required string HorarioFim { get; set; } //18:18
     
 }

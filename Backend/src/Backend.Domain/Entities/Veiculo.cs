@@ -8,6 +8,9 @@ namespace Backend.Domain.Entities;
 [Table("veiculo")]
 public class Veiculo : BaseEntity
 {
+    [Column("id_motorista")]
+    public int? IdMotorista { get; set; }
+    
     [Column("placa")]
     [MaxLength(20)]
     public required string Placa { get; set; }
@@ -32,4 +35,10 @@ public class Veiculo : BaseEntity
     
     [Column("ano")]
     public int? Ano { get; set; }
+    
+    #region Propriedades de Navegacao
+    
+    public virtual Motorista? Motorista { get; set; }
+    
+    #endregion
 }

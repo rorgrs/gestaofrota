@@ -48,9 +48,24 @@ public class VeiculoController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<VeiculoResponse>> Save([FromBody] VeiculoRequest request)
-    {try
+    {
+        try
         {
             var result = await _veiculoService.Save(request);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<VeiculoResponse>> Edit(int id, [FromBody] VeiculoRequest request)
+    {
+        try
+        {
+            var result = await _veiculoService.Edit(id, request);
             return Ok(result);
         }
         catch (Exception e)
