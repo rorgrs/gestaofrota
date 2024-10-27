@@ -89,7 +89,11 @@ public class Startup
 
     private static void ConfigureDepdendencyInjection(IServiceCollection services)
     {
-        services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));   
+        services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+        services.AddScoped(typeof(IMotoristaService), typeof(MotoristaService));
+        services.AddScoped(typeof(IUsuarioService), typeof(UsuarioService));
+        services.AddScoped(typeof(IVeiculoService), typeof(VeiculoService));
+        services.AddScoped(typeof(IViagemService), typeof(ViagemService));
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));   
     }
 }
