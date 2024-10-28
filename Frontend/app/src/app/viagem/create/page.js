@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from "react";
-import getToken from "@/functions/getToken";
 
 export default function CadastroVeiculo() {
   const [idVeiculo, setIdVeiculo] = useState(0);
@@ -14,7 +13,7 @@ export default function CadastroVeiculo() {
   const [ibgeCidadeDestino, setIbgeCidadeDestino] = useState(0);
   const [logradouroDestino, setLogradouroDestino] = useState("");
 
-  const cadastrarVeiculo = async () => {
+  const cadastrarViagem = async () => {
     const data = {
       idVeiculo,
       latOrigem,
@@ -27,15 +26,12 @@ export default function CadastroVeiculo() {
       logradouroDestino,
     };
 
-    const token = await getToken();
-
     try {
-      const response = await fetch("http://localhost:3000/veiculos/cadastrar", {
+      const response = await fetch("https://localhost:5001/viagem", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
-          token: token,
         },
       });
 
@@ -49,7 +45,7 @@ export default function CadastroVeiculo() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center">
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Veículo</h1>
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Viagem</h1>
         
         <form className="space-y-6">
           <input
@@ -120,7 +116,7 @@ export default function CadastroVeiculo() {
             onClick={cadastrarVeiculo}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300"
           >
-            Cadastrar Veículo
+            Cadastrar Viagem
           </button>
         </form>
       </div>
