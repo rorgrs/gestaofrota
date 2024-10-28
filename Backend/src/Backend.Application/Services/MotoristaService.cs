@@ -103,7 +103,8 @@ public class MotoristaService : BaseService<Motorista>, IMotoristaService
         if (entity == null) throw new InvalidOperationException("Cadastro não encontrado.");
         
         var folga = Mapper.Map<MotoristaFolga>(request);
-        await _motoristaFolgaRepository.UpdateAsync(folga);
+        folga.IdMotorista = id;
+        await _motoristaFolgaRepository.AddAsync(folga);
         await _motoristaFolgaRepository.SaveAsync();
     }
 }
