@@ -73,4 +73,32 @@ public class VeiculoController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpPost("{id}/licenciamento")]
+    public async Task<ActionResult> AddLicenciamento(int id, [FromBody] VeiculoLicenciamentoRequest request)
+    {
+        try
+        {
+            await _veiculoService.AddLicenciamento(id, request);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPost("{id}/manutencao")]
+    public async Task<ActionResult> AddManutencao(int id, [FromBody] VeiculoManutencaoRequest request)
+    {
+        try
+        {
+            await _veiculoService.AddManutencao(id, request);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

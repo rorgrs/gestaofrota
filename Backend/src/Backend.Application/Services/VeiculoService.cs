@@ -62,4 +62,32 @@ public class VeiculoService : BaseService<Veiculo>, IVeiculoService
         var list = Mapper.Map<List<VeiculoResponse>>(veiculo);
         return list;
     }
+    
+    public async Task AddLicenciamento(int id, VeiculoLicenciamentoRequest request)
+    {
+        if (id == 0) throw new InvalidOperationException("Id não informado.");
+        
+        var entity = await Repository.GetById(id).FirstOrDefaultAsync();
+        if (entity == null) throw new InvalidOperationException("Cadastro não encontrado.");
+
+        var licenciamento = Mapper.Map<VeiculoLicenciamento>(request);
+        licenciamento.DataCadastro = DateTime.Now;
+
+        await _veiculoLicenciamentoRepository.AddAsync(licenciamento);
+        await _veiculoLicenciamentoRepository.SaveAsync();
+    }
+    
+    public async Task AddManutencao(int id, VeiculoManutencaoRequest request)
+    {
+        if (id == 0) throw new InvalidOperationException("Id não informado.");
+        
+        var entity = await Repository.GetById(id).FirstOrDefaultAsync();
+        if (entity == null) throw new InvalidOperationException("Cadastro não encontrado.");
+
+        var manutencao = Mapper.Map<VeiculoManutencao>(request);
+        manutencao.DataCadastro = DateTime.Now;
+
+        await _veiculoManutencaoRepository.AddAsync(manutencao);
+        await _veiculoManutencaoRepository.SaveAsync();
+    }
 }

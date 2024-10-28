@@ -14,18 +14,25 @@ public class MotoristaService : BaseService<Motorista>, IMotoristaService
 {
     private readonly IMotoristaCarteiraRepository _motoristaCarteiraRepository;
     private readonly IMotoristaFolgaRepository _motoristaFolgaRepository;
+    private readonly IMotoristaEscalaTrabalhoRepository _motoristaEscalaTrabalhoRepository;
 
     public MotoristaService(IMapper mapper, IMotoristaRepository repository, IMotoristaCarteiraRepository motoristaCarteiraRepository,
-        IMotoristaFolgaRepository motoristaFolgaRepository) : base(mapper, repository)
+        IMotoristaFolgaRepository motoristaFolgaRepository, IMotoristaEscalaTrabalhoRepository motoristaEscalaTrabalhoRepository) : base(mapper, repository)
     {
         _motoristaCarteiraRepository = motoristaCarteiraRepository;
         _motoristaFolgaRepository = motoristaFolgaRepository;
+        _motoristaEscalaTrabalhoRepository = motoristaEscalaTrabalhoRepository;
     }
 
     public async Task<MotoristaResponse> Save(MotoristaRequest request)
     {
         if (await Repository.ExistAsync(c => c.Documento == request.Documento))
             throw new InvalidOperationException("Documento repetido.");
+
+        if (!request.IdEscalaTrabalho.HasValue && request.IdEscalaTrabalho <= 0) 
+            request.IdEscalaTrabalho = null;
+        else if (request.IdEscalaTrabalho.HasValue && await _motoristaEscalaTrabalhoRepository.GetById(request.IdEscalaTrabalho.Value).FirstOrDefaultAsync() == null) 
+            request.IdEscalaTrabalho = null;
 
         var entity = Mapper.Map<Motorista>(request);
         entity.DataCadastro = DateTime.Now;
@@ -50,6 +57,11 @@ public class MotoristaService : BaseService<Motorista>, IMotoristaService
         
         var entity = await Repository.GetById(id).FirstOrDefaultAsync();
         if (entity == null) throw new InvalidOperationException("Cadastro não encontrado.");
+
+        if (!request.IdEscalaTrabalho.HasValue && request.IdEscalaTrabalho <= 0) 
+            request.IdEscalaTrabalho = null;
+        else if (request.IdEscalaTrabalho.HasValue && await _motoristaEscalaTrabalhoRepository.GetById(request.IdEscalaTrabalho.Value).FirstOrDefaultAsync() == null) 
+            request.IdEscalaTrabalho = null;
 
         Mapper.Map(request, entity);
         entity.DataAlteracao = DateTime.Now;

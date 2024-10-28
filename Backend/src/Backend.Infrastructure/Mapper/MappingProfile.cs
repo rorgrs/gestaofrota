@@ -23,7 +23,9 @@ public class MappingProfile : Profile
         CreateMap<VeiculoRequest, Veiculo>().ReverseMap();
         CreateMap<VeiculoResponse, Veiculo>().ReverseMap();
         CreateMap<VeiculoLicenciamentoResponse, VeiculoLicenciamento>().ReverseMap();
+        CreateMap<VeiculoLicenciamentoRequest, VeiculoLicenciamento>().ReverseMap();
         CreateMap<VeiculoManutencaoResponse, VeiculoManutencao>().ReverseMap();
+        CreateMap<VeiculoManutencaoRequest, VeiculoManutencao>().ReverseMap();
         
         #endregion
         

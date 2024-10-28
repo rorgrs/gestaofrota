@@ -6,7 +6,7 @@ namespace Backend.Domain.DTOs.Motorista;
 
 public class MotoristaResponse
 {
-    public int? Id { get; set; }
+    public required int Id { get; set; }
     public required string Nome { get; set; }
     public string? Documento { get; set; }
     public DateTime? DataNascimento  { get; set; }

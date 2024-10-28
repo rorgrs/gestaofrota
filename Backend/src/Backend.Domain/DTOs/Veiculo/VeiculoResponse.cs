@@ -6,7 +6,7 @@ namespace Backend.Domain.DTOs.Veiculo;
 
 public class VeiculoResponse
 {
-    public int? Id { get; set; }
+    public required int Id { get; set; }
     public required string Placa { get; set; }
     public string? Marca { get; set; }
     public string? Modelo { get; set; }

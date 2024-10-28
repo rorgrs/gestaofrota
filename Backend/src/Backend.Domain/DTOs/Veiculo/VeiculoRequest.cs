@@ -2,7 +2,6 @@
 
 public class VeiculoRequest
 {
-    public int? Id { get; set; }
     public int? IdMotorista { get; set; }
     public required string Placa { get; set; }
     public string? Marca { get; set; }
