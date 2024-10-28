@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function CadastroManutencao() {
-  const [idVeiculo, setIdVeiculo] = useState(0);
+  // const [idVeiculo, setIdVeiculo] = useState(0);
   const [tipo, setTipo] = useState(""); // Supondo que ETipoManutencaoVeiculo seja uma string ou um valor enumerado
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
@@ -15,7 +15,6 @@ export default function CadastroManutencao() {
     const {id} = useParams();
 
     const data = {
-      IdVeiculo: id,
       Tipo: tipo,
       DataInicio: dataInicio,
       DataFim: dataFim || null,
@@ -25,7 +24,7 @@ export default function CadastroManutencao() {
 
     console.log(data);
     try {
-      const response = await fetch("https://localhost:5001/veiculo/manutencao", {
+      const response = await fetch(`https://localhost:5001/veiculo/${id}/manutencao`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -47,14 +46,15 @@ export default function CadastroManutencao() {
 
         {/* Formulário de cadastro */}
         <form className="space-y-6">
-          <input
+          {/* <input
             type="number"
             className="border border-gray-300 rounded-lg p-3 w-full"
             placeholder="ID do Veículo"
             disabled = {true}
             value={id}
             onChange={(e) => setIdVeiculo(e.target.value)}
-          />
+          /> */}
+
           <input
             type="text"
             className="border border-gray-300 rounded-lg p-3 w-full"

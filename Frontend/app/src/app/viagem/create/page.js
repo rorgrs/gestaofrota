@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function CadastroVeiculo() {
+export default function CadastroViagem() {
   const [idVeiculo, setIdVeiculo] = useState(0);
   const [latOrigem, setLatOrigem] = useState(0);
   const [lngOrigem, setLngOrigem] = useState(0);
@@ -13,7 +13,7 @@ export default function CadastroVeiculo() {
   const [ibgeCidadeDestino, setIbgeCidadeDestino] = useState(0);
   const [logradouroDestino, setLogradouroDestino] = useState("");
 
-  const cadastrarViagem = async () => {
+  const CadastrarViagem = async () => {
     const data = {
       idVeiculo,
       latOrigem,
@@ -113,7 +113,7 @@ export default function CadastroVeiculo() {
           />
           <button
             type="button"
-            onClick={cadastrarVeiculo}
+            onClick={CadastrarViagem}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300"
           >
             Cadastrar Viagem

@@ -160,22 +160,6 @@ export default function Vehicle() {
                         <p className="text-gray-500">Nenhuma manutenção encontrada.</p>
                     )}
 
-                    <h2 className="text-2xl font-semibold mt-8 mb-4">Licenciamentos</h2>
-                    {licenciamento.length > 0 ? (
-                        <ul className="list-disc pl-5">
-                            {licenciamento.map((licenciamento, index) => (
-                                <li key={index} className="mb-2">
-                                    Tipo: {manutencao.tipo} <br />
-                                    Data Início: {new Date(manutencao.dataInicio).toLocaleDateString()} <br />
-                                    Data Fim: {manutencao.dataFim ? new Date(manutencao.dataFim).toLocaleDateString() : 'N/A'} <br />
-                                    Observação: {manutencao.observacao || 'N/A'} <br />
-                                    Diagnóstico: {manutencao.diagnostico || 'N/A'} <br />
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p className="text-gray-500">Nenhuma manutenção encontrada.</p>
-                    )}
 
                     <h2 className="text-2xl font-semibold mt-8 mb-4">Licenciamentos</h2>
                     {licenciamentos.length > 0 ? (
@@ -190,7 +174,7 @@ export default function Vehicle() {
                             ))}
                         </ul>
                     ) : (
-                        <p className="text-gray-500">Nenhum licenciamentoo encontrado.</p>
+                        <p className="text-gray-500">Nenhum licenciamento encontrado.</p>
                     )}
 
                 </div>
