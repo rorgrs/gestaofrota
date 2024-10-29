@@ -29,6 +29,7 @@ export default function Vehicle() {
             });
             const data = await response.json();
 
+            console.log(data)
             setPlaca(data.placa);
             setMarca(data.marca);
             setModelo(data.modelo);
@@ -83,11 +84,11 @@ export default function Vehicle() {
                 <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg text-black">
                     <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Atualização Veículo</h1>
                     <div className="flex justify-end mb-6">
-                        <Link href={`/veiculos/licenciamento/create/$id`} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
+                        <Link href={'/veiculos/licenciamento/create/' + id} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
                             Novo Licenciamento
                         </Link>
 
-                        <Link href={`/veiculos/manutencao/create/$id`} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
+                        <Link href={'/veiculos/manutencao/create/' + id} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
                             Nova Manutenção
                         </Link>
                     </div>

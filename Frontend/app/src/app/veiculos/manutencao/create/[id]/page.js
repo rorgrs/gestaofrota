@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function CadastroManutencao() {
+  const {id} = useParams();
   // const [idVeiculo, setIdVeiculo] = useState(0);
   const [tipo, setTipo] = useState(""); // Supondo que ETipoManutencaoVeiculo seja uma string ou um valor enumerado
   const [dataInicio, setDataInicio] = useState("");
@@ -12,14 +13,16 @@ export default function CadastroManutencao() {
   const [diagnostico, setDiagnostico] = useState("");
 
   const CreateManutencao = async () => {
-    const {id} = useParams();
+
+    const DataInicioISO = new Date(dataInicio).toISOString();
+    const DataFimISO = new Date(dataFim).toISOString();
 
     const data = {
-      Tipo: tipo,
-      DataInicio: dataInicio,
-      DataFim: dataFim || null,
-      Observacao: observacao || null,
-      Diagnostico: diagnostico || null,
+      tipo: Number(tipo),
+      dataInicio: DataInicioISO,
+      dataFim: DataFimISO || null,
+      observacao: observacao || null,
+      diagnostico: diagnostico || null,
     };
 
     console.log(data);
@@ -32,8 +35,8 @@ export default function CadastroManutencao() {
         },
       });
 
-      const jsonResponse = await response.json();
-      console.log(jsonResponse);
+      // const jsonResponse = await response.json();
+      // console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar manutenção:", error);
     }

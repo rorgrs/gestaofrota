@@ -3,14 +3,14 @@
 import { useState } from "react";
 
 export default function CadastroViagem() {
-  const [idVeiculo, setIdVeiculo] = useState(0);
-  const [latOrigem, setLatOrigem] = useState(0);
-  const [lngOrigem, setLngOrigem] = useState(0);
-  const [ibgeCidadeOrigem, setIbgeCidadeOrigem] = useState(0);
+  const [idVeiculo, setIdVeiculo] = useState();
+  const [latOrigem, setLatOrigem] = useState();
+  const [lngOrigem, setLngOrigem] = useState();
+  const [ibgeCidadeOrigem, setIbgeCidadeOrigem] = useState();
   const [logradouroOrigem, setLogradouroOrigem] = useState("");
-  const [latDestino, setLatDestino] = useState(0);
-  const [lngDestino, setLngDestino] = useState(0);
-  const [ibgeCidadeDestino, setIbgeCidadeDestino] = useState(0);
+  const [latDestino, setLatDestino] = useState();
+  const [lngDestino, setLngDestino] = useState();
+  const [ibgeCidadeDestino, setIbgeCidadeDestino] = useState();
   const [logradouroDestino, setLogradouroDestino] = useState("");
 
   const CadastrarViagem = async () => {
@@ -43,7 +43,7 @@ export default function CadastroViagem() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Viagem</h1>
         

@@ -10,7 +10,7 @@ export default function Home() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://localhost:5001/veiculo', { // Atualizar a URL para a API de veículos
+      const response = await fetch('https://localhost:5001/viagem', { // Atualizar a URL para a API de veículos
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -18,6 +18,7 @@ export default function Home() {
         }
       });
       const data = await response.json();
+      console.log(data)
       setDados(data);
       setFilteredData(data);
     } catch (error) {
@@ -39,7 +40,7 @@ export default function Home() {
   }, [searchTerm, dados]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
       <aside className="w-1/4 bg-white p-8 shadow-lg">
         <nav className="space-y-4">
           <Link href="/" className="block text-lg font-bold text-gray-800 hover:text-blue-500">Página Inicial</Link>
@@ -98,7 +99,7 @@ export default function Home() {
           </table>
 
           {filteredData.length === 0 && (
-            <p className="text-center text-gray-500 mt-4">Nenhum veículo encontrado.</p>
+            <p className="text-center text-gray-500 mt-4">Nenhuma viagem encontrada.</p>
           )}
         </div>
       </div>

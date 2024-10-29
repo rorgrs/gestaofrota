@@ -1,23 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 
 export default function CadastroLicenciamento() {
-
-  const [IdMotorista, setIdMotorista] = useState(0);
+  const { id } = useParams();
+  // const [IdMotorista, setIdMotorista] = useState(0);
   const [DataInicio, setDataInicio] = useState("");
   const [DataFim, setDataFim] = useState("");
 
   const CreateFolga = async () => {
+    // Convertendo datas para o formato exigido com milissegundos
+  const dataInicioISO = new Date(DataInicio).toISOString();
+  const dataFimISO = new Date(DataFim).toISOString();
 
-    const { id } = useParams();
-
-    const data = {
-      DataValidade: DataValidade,
-      DataVencimento: DataVencimento,
-    };
-
+  const data = {
+    dataInicio: dataInicioISO,
+    dataFim: dataFimISO
+  };
+    console.log(id)
     console.log(data);
+    console.log(JSON.stringify(data))
     try {
       const response = await fetch(`https://localhost:5001/motorista/${id}/folga`, {
         method: "POST",
@@ -26,6 +29,12 @@ export default function CadastroLicenciamento() {
           "Content-Type": "application/json; charset=UTF-8",
         },
       });
+
+      if (!response.ok) {
+        // Se o backend retornar um status de erro, lança uma exceção com o texto da resposta
+        const errorText = await response.text();
+        throw new Error(`Erro na requisição: ${errorText}`);
+      }
 
       const jsonResponse = await response.json();
       console.log(jsonResponse);
@@ -41,22 +50,22 @@ export default function CadastroLicenciamento() {
 
         {/* Formulário de cadastro */}
         <form className="space-y-6">
-          <input
+          {/* <input
             type="number"
             className="border border-gray-300 rounded-lg p-3 w-full"
             placeholder="ID Motorista"
             value={IdMotorista}
             onChange={(e) => setIdMotorista(e.target.value)}
-          />
+          /> */}
           <input
-            type="date"
+            type="datetime-local"
             className="border border-gray-300 rounded-lg p-3 w-full"
             placeholder="Data Inicio"
             value={DataInicio}
             onChange={(e) => setDataInicio(e.target.value)}
           />
           <input
-            type="date"
+            type="datetime-local"
             className="border border-gray-300 rounded-lg p-3 w-full"
             placeholder="Data Fim"
             value={DataFim}

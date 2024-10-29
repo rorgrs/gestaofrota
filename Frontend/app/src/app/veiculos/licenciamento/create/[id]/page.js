@@ -1,8 +1,10 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function CadastroLicenciamento() {
+  const { id } = useParams();
   const [idVeiculo, setIdVeiculo] = useState(0);
   const [DataEmissao, setDataEmissao] = useState("");
   const [DataValidade, setDataValidade] = useState("");
@@ -10,12 +12,14 @@ export default function CadastroLicenciamento() {
 
   const CreateLicenciamento = async () => {
 
-    const { id } = useParams();
+    const DataEmissaoISO = new Date(DataEmissao).toISOString();
+    const DataValidadeISO = new Date(DataValidade).toISOString();
+    const DataVencimentoISO = new Date(DataVencimento).toISOString();
 
     const data = {
-      DataEmissao: DataEmissao,
-      DataValidade: DataValidade,
-      DataVencimento: DataVencimento,
+      dataEmissao: DataEmissaoISO,
+      dataValidade: DataEmissaoISO,
+      dataVencimento: DataEmissaoISO,
     };
 
     console.log(data);
@@ -28,8 +32,8 @@ export default function CadastroLicenciamento() {
         },
       });
 
-      const jsonResponse = await response.json();
-      console.log(jsonResponse);
+      // const jsonResponse = await response.sa;
+      // console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar licenciamento:", error);
     }
@@ -42,14 +46,14 @@ export default function CadastroLicenciamento() {
 
         {/* Formulário de cadastro */}
         <form className="space-y-6">
-          <input
+          {/* <input
             type="number"
             className="border border-gray-300 rounded-lg p-3 w-full"
             placeholder="ID do Veículo"
             disabled={true}
             value={id}
             onChange={(e) => setIdVeiculo(e.target.value)}
-          />
+          /> */}
           <input
             type="date"
             className="border border-gray-300 rounded-lg p-3 w-full"
