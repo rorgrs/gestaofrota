@@ -1,5 +1,6 @@
 'use client';
 
+import Aside from "@/app/components/aside";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -41,12 +42,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
-      <aside className="w-1/4 bg-white p-8 shadow-lg">
-        <nav className="space-y-4">
-          <Link href="/" className="block text-lg font-bold text-gray-800 hover:text-blue-500">Página Inicial</Link>
-          <Link href="/create/veiculo" className="block text-lg font-bold text-gray-800 hover:text-blue-500">Nova viagem</Link>
-        </nav>
-      </aside>
+      <Aside></Aside>
 
       <div className="w-3/4 p-8 ml-0">
         <div className="container mx-auto p-8 bg-white rounded-lg shadow-lg">

@@ -1,8 +1,6 @@
 'use client';
 
-import Link from "next/link";
 import { useState } from "react";
-
 
 export default function Home() {
   const [nome, setNome] = useState("");
@@ -22,13 +20,11 @@ export default function Home() {
       dataNascimento: dataNascimento,
       celular: celular,
       email: email,
-      // statusTreinamento: statusTreinamento,
-      // idEscalaTrabalho: idEscalaTrabalho,
+      statusTreinamento: statusTreinamento,
+      idEscalaTrabalho: idEscalaTrabalho,
       cnh: cnh,
       cnhDataVencimento: cnhDataVencimento,
-      // datger: new Date().toISOString().split('T')[0]
     };
-
 
     const response = await fetch('https://localhost:5001/motorista', {
       method: 'POST',
@@ -45,89 +41,111 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Usuário</h1>
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Motorista</h1>
 
         {/* Formulário de cadastro */}
         <form className="space-y-6">
           {/* Campo Nome */}
-          <input
-            type="text"
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Nome</label>
+            <input
+              type="text"
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+            />
+          </div>
 
           {/* Campo Documento */}
-          <input
-            type="text"
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Documento"
-            value={documento}
-            onChange={(e) => setDocumento(e.target.value)}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Documento</label>
+            <input
+              type="text"
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={documento}
+              onChange={(e) => setDocumento(e.target.value)}
+            />
+          </div>
 
           {/* Campo Data de Nascimento */}
-          <input
-            type="date"
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            value={dataNascimento}
-            onChange={(e) => setDataNascimento(e.target.value)}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Data de Nascimento</label>
+            <input
+              type="date"
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={dataNascimento}
+              onChange={(e) => setDataNascimento(e.target.value)}
+            />
+          </div>
 
           {/* Campo Celular */}
-          <input
-            type="text"
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Celular"
-            value={celular}
-            onChange={(e) => setCelular(e.target.value)}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Celular</label>
+            <input
+              type="text"
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={celular}
+              onChange={(e) => setCelular(e.target.value)}
+            />
+          </div>
 
           {/* Campo Email */}
-          <input
-            type="email"
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Email</label>
+            <input
+              type="email"
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
           {/* Select Status Treinamento */}
-          <select
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            value={statusTreinamento}
-            onChange={(e) => setStatusTreinamento(Number(e.target.value))}
-          >
-            <option value={1}>Ativo</option>
-            <option value={0}>Inativo</option>
-          </select>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Status de Treinamento</label>
+            <select
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={statusTreinamento}
+              onChange={(e) => setStatusTreinamento(Number(e.target.value))}
+            >  
+              <option value={0}>Cancelado</option>
+              <option value={1}>Finalizado</option>
+              <option value={2}>Em andamento</option>
+            </select>
+          </div>
 
           {/* Campo ID Escala Trabalho */}
-          <input
-            type="number"
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="ID Escala de Trabalho"
-            value={idEscalaTrabalho}
-            onChange={(e) => setIdEscalaTrabalho(Number(e.target.value))}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">ID Escala de Trabalho</label>
+            <select className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+             value={idEscalaTrabalho}
+             onChange={(e) => setIdEscalaTrabalho(Number(e.target.value))}>
+                <option value={1}>12x36</option>
+                <option value={2}>12x40</option>
+            </select>
+          </div>
 
           {/* Campo CNH */}
-          <input
-            type="text"
-            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="CNH"
-            value={cnh}
-            onChange={(e) => setCnh(e.target.value)}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">CNH</label>
+            <input
+              type="text"
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={cnh}
+              onChange={(e) => setCnh(e.target.value)}
+            />
+          </div>
 
           {/* Campo CNH Data de Vencimento */}
-          <input
-            type="date"
-            className="border border-gray-300 rounded-lg p-3 ws-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            value={cnhDataVencimento}
-            onChange={(e) => setCnhDataVencimento(e.target.value)}
-          />
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Data de Vencimento da CNH</label>
+            <input
+              type="date"
+              className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+              value={cnhDataVencimento}
+              onChange={(e) => setCnhDataVencimento(e.target.value)}
+            />
+          </div>
 
           {/* Botão de Cadastro */}
           <button
