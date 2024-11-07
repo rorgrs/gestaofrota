@@ -72,7 +72,7 @@ public class VeiculoService : BaseService<Veiculo>, IVeiculoService
 
         var licenciamento = Mapper.Map<VeiculoLicenciamento>(request);
         licenciamento.DataCadastro = DateTime.Now;
-
+        licenciamento.IdVeiculo = id;
         await _veiculoLicenciamentoRepository.AddAsync(licenciamento);
         await _veiculoLicenciamentoRepository.SaveAsync();
     }
@@ -86,7 +86,7 @@ public class VeiculoService : BaseService<Veiculo>, IVeiculoService
 
         var manutencao = Mapper.Map<VeiculoManutencao>(request);
         manutencao.DataCadastro = DateTime.Now;
-
+        manutencao.IdVeiculo = id;
         await _veiculoManutencaoRepository.AddAsync(manutencao);
         await _veiculoManutencaoRepository.SaveAsync();
     }
