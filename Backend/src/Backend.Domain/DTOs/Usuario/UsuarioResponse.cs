@@ -9,5 +9,6 @@ public class UsuarioResponse
     public required string Login { get; set; }
     public required string Documento { get; set; }
     public required string Email { get; set; }
+    public required string Senha { get; set; }
     public DateTime? DataCadastro { get; set; }
 }
