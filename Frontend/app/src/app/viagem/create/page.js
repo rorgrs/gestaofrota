@@ -1,6 +1,8 @@
-'use client';
+"use client";
 
 import { useState } from "react";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 export default function CadastroViagem() {
   const [idVeiculo, setIdVeiculo] = useState();
@@ -12,6 +14,9 @@ export default function CadastroViagem() {
   const [lngDestino, setLngDestino] = useState();
   const [ibgeCidadeDestino, setIbgeCidadeDestino] = useState();
   const [logradouroDestino, setLogradouroDestino] = useState("");
+  const [origem, setOrigem] = useState(null);
+  const [destino, setDestino] = useState(null);
+  const [selecionandoDestino, setSelecionandoDestino] = useState(false);
 
   const CadastrarViagem = async () => {
     const data = {
@@ -38,8 +43,35 @@ export default function CadastroViagem() {
       const jsonResponse = await response.json();
       console.log(jsonResponse);
     } catch (error) {
-      console.error("Erro ao cadastrar o veículo:", error);
+      console.error("Erro ao cadastrar a viagem:", error);
     }
+  };
+
+  const customIcon = new L.Icon({
+    iconUrl: '/icons/pinmap.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  });
+
+  const SelecionarPonto = () => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng;
+
+        if (!selecionandoDestino) {
+          setOrigem(e.latlng);
+          setLatOrigem(lat);
+          setLngOrigem(lng);
+          setSelecionandoDestino(true);
+        } else {
+          setDestino(e.latlng);
+          setLatDestino(lat);
+          setLngDestino(lng);
+          setSelecionandoDestino(false);
+        }
+      }
+    });
+    return null;
   };
 
   return (
@@ -111,6 +143,22 @@ export default function CadastroViagem() {
             onChange={(e) => setLogradouroDestino(e.target.value)}
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
           />
+
+          <div>
+            <h2>Selecione a Origem e Destino:</h2>
+            <MapContainer center={[-15.7797, -47.9297]} zoom={4} style={{ height: "400px", width: "100%" }}>
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              {origem && <Marker position={origem} icon={customIcon}/>}
+              {destino && <Marker position={destino} icon={customIcon}/>}
+              <SelecionarPonto />
+            </MapContainer>
+
+            <button onClick={()=>{console.log(origem)}}
+            >
+              opa
+            </button>
+          </div>
+
           <button
             type="button"
             onClick={CadastrarViagem}

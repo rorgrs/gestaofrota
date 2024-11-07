@@ -41,7 +41,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex">
       <Aside></Aside>
 
-      <div className="w-4/4 p-8 ml-0">
+      <div className="w-3/4 p-8 ml-0">
         <div className="container mx-auto p-8 bg-white rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Lista de Usuarios</h1>
 

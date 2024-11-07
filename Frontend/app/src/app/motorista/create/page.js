@@ -34,7 +34,7 @@ export default function Home() {
       },
     });
 
-    const jsonResponse = await response.json();
+    const jsonResponse = await response.status;
     console.log(jsonResponse);
   };
 
@@ -59,12 +59,14 @@ export default function Home() {
           {/* Campo Documento */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Documento</label>
+
             <input
               type="text"
+              required={true}
               className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
               value={documento}
               onChange={(e) => setDocumento(e.target.value)}
-            />
+            /> 
           </div>
 
           {/* Campo Data de Nascimento */}

@@ -36,7 +36,7 @@ export default function CadastroLicenciamento() {
         throw new Error(`Erro na requisição: ${errorText}`);
       }
 
-      const jsonResponse = await response.json();
+      const jsonResponse = await response.status;
       console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar licenciamento:", error);

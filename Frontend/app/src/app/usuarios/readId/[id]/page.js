@@ -10,12 +10,12 @@ export default function Users() {
     const [login, setLogin] = useState("");
     const [documento, setDocumento] = useState("");
     const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
     const [dataCadastro, setDataCadastro] = useState("");
     const [loading, setLoading] = useState(true);
 
     const fetchData = async () => {
         setLoading(true);
-
         try {
             const response = await fetch(`https://localhost:5001/usuario/${id}`, {
                 method: 'GET',
@@ -25,11 +25,14 @@ export default function Users() {
                 credentials: 'include'
             });
             const data = await response.json();
-
+            
+            console.log(data)
             setNome(data.nome);
             setLogin(data.login);
             setDocumento(data.documento);
             setEmail(data.email);
+            setSenha(data.senha);
+            console.log(data.senha)
             const dataCadastro = new Date(data.dataCadastro).toISOString().split('T')[0];
             setDataCadastro(dataCadastro);
             setLoading(false);
@@ -40,15 +43,16 @@ export default function Users() {
 
     const PutData = async () => {
         const dataPut = {
-            id, // Incluindo o ID no objeto de atualização
+            id,
             nome,
             login,
             documento,
+            senha,
             email,
-            dataCadastro // Se necessário, você pode modificar este valor conforme a lógica de seu aplicativo
+            dataCadastro
         };
 
-        console.log(dataPut)
+        console.log(dataPut);
 
         try {
             const response = await fetch(`https://localhost:5001/usuario/${id}`, {
@@ -84,41 +88,63 @@ export default function Users() {
                         </Link>
                     </div>
                     <form className="space-y-6">
-                        <input
-                            type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Nome"
-                            value={nome}
-                            onChange={(e) => setNome(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Login"
-                            value={login}
-                            onChange={(e) => setLogin(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Documento"
-                            value={documento}
-                            onChange={(e) => setDocumento(e.target.value)}
-                        />
-                        <input
-                            type="email"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <input
-                            type="date"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            disabled={true}
-                            value={dataCadastro}
-                            onChange={(e) => setDataCadastro(e.target.value)}
-                        />
+                        <label className="block">
+                            <span className="text-gray-700">Nome</span>
+                            <input
+                                type="text"
+                                className="border border-gray-300 rounded-lg p-3 w-full mt-1"
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                            />
+                        </label>
+                        <label className="block">
+                            <span className="text-gray-700">Login</span>
+                            <input
+                                type="text"
+                                className="border border-gray-300 rounded-lg p-3 w-full mt-1"
+                                value={login}
+                                onChange={(e) => setLogin(e.target.value)}
+                            />
+                        </label>
+                        <label className="block">
+                            <span className="text-gray-700">Documento</span>
+                            <input
+                                type="text"
+                                className="border border-gray-300 rounded-lg p-3 w-full mt-1"
+                                value={documento}
+                                onChange={(e) => setDocumento(e.target.value)}
+                            />
+                        </label>
+
+                        <label className="block">
+                            <span className="text-gray-700">Senha</span>
+                            <input
+                                type="text"
+                                className="border border-gray-300 rounded-lg p-3 w-full mt-1"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                            />
+                        </label>
+
+                        <label className="block">
+                            <span className="text-gray-700">Email</span>
+                            <input
+                                type="email"
+                                className="border border-gray-300 rounded-lg p-3 w-full mt-1"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+                        <label className="block">
+                            <span className="text-gray-700">Data de Cadastro</span>
+                            <input
+                                type="date"
+                                className="border border-gray-300 rounded-lg p-3 w-full mt-1"
+                                disabled={true}
+                                value={dataCadastro}
+                                onChange={(e) => setDataCadastro(e.target.value)}
+                            />
+                        </label>
                         <button
                             type="button"
                             onClick={PutData}

@@ -11,11 +11,13 @@ export default function Users() {
     const [dataNascimento, setDataNascimento] = useState("");
     const [celular, setCelular] = useState("");
     const [email, setEmail] = useState("");
-    const [statusTreinamento, setStatusTreinamento] = useState(1);
-    const [carteiras, setCarteiras] = useState([]);
-    const [escalaTrabalho, setEscalaTrabalho] = useState({ dataInicio: "", dataFim: "" });
+    // const [statusTreinamento, setStatusTreinamento] = useState(1);
+    // const [carteiras, setCarteiras] = useState([]);
+    // const [escalaTrabalho, setEscalaTrabalho] = useState({ dataInicio: "", dataFim: "" });
     const [folgas, setFolgas] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [cnh, setCnh] = useState("");
+    const [cnhDataVencimento, setCnhDataVencimento] = useState("");
 
     const fetchData = async () => {
         setLoading(true);
@@ -30,34 +32,33 @@ export default function Users() {
             });
             const data = await response.json();
 
+            console.log(data)
             setNome(data.nome);
             setDocumento(data.documento);
-            const dataNascimento = new Date(data.dataNascimento).toISOString().split('T')[0];
-            setDataNascimento(dataNascimento);
+            setDataNascimento(new Date(data.dataNascimento).toISOString().split('T')[0]);
             setCelular(data.celular);
             setEmail(data.email);
-            setStatusTreinamento(data.statusTreinamento);
-            setCarteiras(data.carteiras);
-            setEscalaTrabalho(data.escalaTrabalho);
+            // setStatusTreinamento(data.statusTreinamento);
+            // setEscalaTrabalho(data.escalaTrabalho);
             setFolgas(data.folgas);
+            console.log(data.folgas)
+            setCnh(data.carteiras[0].cnh);
+            setCnhDataVencimento(new Date(data.carteiras[0].dataVencimento).toISOString().split('T')[0])
+            setFolgas(data.folgas)
             setLoading(false);
+
         } catch (error) {
             console.log(error);
         }
     };
 
     const PutData = async () => {
-
         const dataPut = {
             nome,
             documento,
             dataNascimento,
             celular,
             email
-            // statusTreinamento,
-            // carteiras,
-            // escalaTrabalho,
-            // folgas
         };
 
         try {
@@ -88,68 +89,117 @@ export default function Users() {
             ) : (
                 <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg text-black">
                     <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Atualização Motorista</h1>
-                    <div className="flex justify-end mb-6">
-                        <Link href="/create/newForm" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
-                            Novo Formulário
+                    <div className="flex justify-end mb-6 gap-4">
+                        <Link href="/motorista/create" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
+                            Novo Motorista
+                        </Link>
+
+                        <Link href={'/motorista/folga/create/' + id} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
+                            Nova Folga
                         </Link>
                     </div>
                     <form className="space-y-6">
-                        <input
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Nome</label>
+                            <input
                             type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Nome"
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
-                        />
-                        <input
+                            />
+                        </div>
+
+                        {/* Campo Documento */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Documento</label>
+                            <input
                             type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Documento"
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
                             value={documento}
                             onChange={(e) => setDocumento(e.target.value)}
-                        />
-                        <input
+                            />
+                        </div>
+
+                        {/* Campo Data de Nascimento */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Data de Nascimento</label>
+                            <input
                             type="date"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
                             value={dataNascimento}
                             onChange={(e) => setDataNascimento(e.target.value)}
-                        />
-                        <input
+                            />
+                        </div>
+
+                        {/* Campo Celular */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Celular</label>
+                            <input
                             type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Celular"
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
                             value={celular}
                             onChange={(e) => setCelular(e.target.value)}
-                        />
-                        <input
+                            />
+                        </div>
+
+                        {/* Campo Email */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Email</label>
+                            <input
                             type="email"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Email"
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                        />
-                        {/* <select
-                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            />
+                        </div>
+
+                        {/* Select Status Treinamento
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Status de Treinamento</label>
+                            <select
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
                             value={statusTreinamento}
                             onChange={(e) => setStatusTreinamento(Number(e.target.value))}
-                        >
-                            <option value={1}>Ativo</option>
-                            <option value={0}>Inativo</option>
-                        </select> */}
-                        {/* <input
+                            >  
+                            <option value={0}>Cancelado</option>
+                            <option value={1}>Finalizado</option>
+                            <option value={2}>Em andamento</option>
+                            </select>
+                        </div>
+
+                        {/* Campo ID Escala Trabalho */}
+                        {/* <div>
+                            <label className="block text-gray-700 font-medium mb-2">ID Escala de Trabalho</label>
+                            <select className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+                            value={escalaTrabalho}
+                            onChange={(e) => setEscalaTrabalho(Number(e.target.value))}>
+                                <option value={1}>12x36</option>
+                                <option value={2}>12x40</option>
+                            </select>
+                        </div> } */}
+
+                        {/* Campo CNH */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Habilitação</label>
+                            <input
                             type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Data Início da Escala"
-                            value={escalaTrabalho.dataInicio}
-                            onChange={(e) => setEscalaTrabalho({ ...escalaTrabalho, dataInicio: e.target.value })}
-                        />
-                        <input
-                            type="text"
-                            className="border border-gray-300 rounded-lg p-3 w-full"
-                            placeholder="Data Fim da Escala"
-                            value={escalaTrabalho.dataFim}
-                            onChange={(e) => setEscalaTrabalho({ ...escalaTrabalho, dataFim: e.target.value })}
-                        /> */}
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+                            value={cnh}
+                            onChange={(e) => setCnh(e.target.value)}
+                            />
+                        </div>
+
+                        {/* Campo CNH Data de Vencimento */}
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Data de Vencimento da CNH</label>
+                            <input
+                            type="date"
+                            className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
+                            value={cnhDataVencimento}
+                            onChange={(e) => setCnhDataVencimento(e.target.value)}
+                            />
+                        </div>
+
                         <button
                             type="button"
                             onClick={PutData}
@@ -158,6 +208,31 @@ export default function Users() {
                             Atualizar
                         </button>
                     </form>
+                    
+                    <h1 className="block text-gray-700 font-medium m-2 text-center">Folgas</h1>
+                    <div className="w-full">
+                        <table className="w-full text-left border-collapse text-black">
+                            <thead>
+                                <tr>
+                                <th className="border-b-2 p-4 text-center font-semibold text-gray-600">Data Inicio</th>
+                                <th className="border-b-2 p-4 text-center font-semibold text-gray-600">Hora Inicio</th>
+                                <th className="border-b-2 p-4 text-center font-semibold text-gray-600">Data Fim</th>
+                                <th className="border-b-2 p-4 text-center font-semibold text-gray-600">Hora Fim</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {/* {console.log(resaco, "test")} */}
+                                {folgas.map((item, index) => (
+                                <tr key={index} className="hover:bg-blue-50 transition-all duration-300 font:black">
+                                    <td className="border-b p-4 text-center">{new Date(item.dataInicio).toLocaleDateString('pt-BR')}</td>
+                                    <td className="border-b p-4 text-center">{new Date(item.dataInicio).toLocaleTimeString('pt-br')}</td>
+                                    <td className="border-b p-4 text-center">{new Date(item.dataFim).toLocaleDateString('pt-br')}</td>
+                                    <td className="border-b p-4 text-center">{new Date(item.dataFim).toLocaleTimeString('pt-br')}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                            </table>
+                            </div>
                 </div>
             )}
         </main>
