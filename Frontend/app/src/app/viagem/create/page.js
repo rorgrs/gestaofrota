@@ -4,6 +4,12 @@ import { useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
+const customIcon = new L.Icon({
+  iconUrl: '/icons/pinmap.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
 export default function CadastroViagem() {
   const [idVeiculo, setIdVeiculo] = useState();
   const [latOrigem, setLatOrigem] = useState();
@@ -47,11 +53,7 @@ export default function CadastroViagem() {
     }
   };
 
-  const customIcon = new L.Icon({
-    iconUrl: '/icons/pinmap.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-  });
+
 
   const SelecionarPonto = () => {
     useMapEvents({
