@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import AlertSucess from "@/app/components/sucess";
+import AlertError from "@/app/components/error";
+
 
 export default function Home() {
   const [nome, setNome] = useState("");
@@ -9,6 +12,14 @@ export default function Home() {
   const [documento, setDocumento] = useState("");
   const [senha, setSenha] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(0);
+  const [sucess, setSucess] = useState(0);
+
+  
+  const handleClose = () => {
+    setError(0);
+    setSucess(0);
+  };
 
   const createUser = async () => {
     const data = {
@@ -29,7 +40,14 @@ export default function Home() {
         },
       });
 
-      const jsonResponse = await response.json();
+      const jsonResponse = await response.status;
+      if (jsonResponse === 200) {
+        setSucess(1);
+      }
+      else {
+        setError(1);
+      }
+
       console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar usuário:", error);
@@ -38,56 +56,65 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
+      {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+      {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}
+
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Usuários</h1>
+
 
         {/* Formulário de cadastro de usuário */}
         <form className="space-y-6">
 
-          {/* Campo Nome */}
-          <input
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Nome</label>
+            <input
             type="text"
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Nome do usuário"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
           />
+          </div>
 
-          {/* Campo Login */}
-          <input
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Login</label>
+            <input
             type="text"
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Login"
             value={login}
             onChange={(e) => setLogin(e.target.value)}
           />
+          </div>
 
-          {/* Campo Documento */}
-          <input
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Documento</label>
+            <input
             type="text"
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Documento"
             value={documento}
             onChange={(e) => setDocumento(e.target.value)}
           />
+          </div>
 
-          {/* Campo Senha */}
-          <input
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Senha</label>
+            <input
             type="password"
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
           />
+          </div>
 
-          {/* Campo Email */}
-          <input
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Email</label>
+            <input
             type="email"
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring focus:ring-blue-200 transition-all duration-300"
-            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          </div>
 
           {/* Botão de Cadastro */}
           <button

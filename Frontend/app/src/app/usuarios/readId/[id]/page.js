@@ -3,6 +3,8 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import AlertSucess from "@/app/components/sucess";
+import AlertError from "@/app/components/error";
 
 export default function Users() {
     const { id } = useParams();
@@ -13,6 +15,8 @@ export default function Users() {
     const [senha, setSenha] = useState("");
     const [dataCadastro, setDataCadastro] = useState("");
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(0);
+    const [sucess, setSucess] = useState(0);
 
     const fetchData = async () => {
         setLoading(true);
@@ -41,6 +45,12 @@ export default function Users() {
         }
     };
 
+    const handleClose = () => {
+        setError(0);
+        setSucess(0);
+    };
+
+
     const PutData = async () => {
         const dataPut = {
             id,
@@ -63,6 +73,13 @@ export default function Users() {
                 body: JSON.stringify(dataPut),
                 credentials: 'include'
             });
+            const jsonResponse = await response.status;
+            if (jsonResponse === 200) {
+              setSucess(1);
+            }
+            else {
+              setError(1);
+            }
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -77,6 +94,8 @@ export default function Users() {
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center">
+            {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+            {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}
             {loading ? (
                 <p>Carregando...</p>
             ) : (

@@ -85,8 +85,9 @@ export default function Home() {
             onChange={(e) => setStatusTreinamento(e.target.value)}
           >
             <option value="">Todos os Status</option>
-            <option value="1">Treinamento Completo</option>
-            <option value="0">Treinamento Pendente</option>
+            <option value="1">Em andamento</option>
+            <option value="2">Finalizado</option>
+            <option value="3">Cancelado</option>
           </select>
 
           <table className="w-full text-left border-collapse text-black">
@@ -105,7 +106,7 @@ export default function Home() {
                   <td className="border-b p-4">{user.id}</td>
                   <td className="border-b p-4">{user.nome}</td>
                   <td className="border-b p-4">{user.documento}</td>
-                  <td className="border-b p-4">{user.statusTreinamento === 1 ? 'Completo' : 'Pendente'}</td>
+                  <td className="border-b p-4">{user.statusTreinamento === 1 ? 'Em andamento' :user.statusTreinamento === 2 ? 'Finalizado' :user.statusTreinamento === 3 ? 'Cancelado': 'Não informado'}</td>
                   <td className="border-b p-4">
                     <Link href={`/motorista/readId/${user.id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg mr-2">Editar</Link>
                     {/* <button 

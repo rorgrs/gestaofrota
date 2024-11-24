@@ -2,12 +2,22 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import AlertSucess from "@/app/components/sucess";
+import AlertError from "@/app/components/error";
 
 export default function CadastroLicenciamento() {
   const { id } = useParams();
   // const [IdMotorista, setIdMotorista] = useState(0);
   const [DataInicio, setDataInicio] = useState("");
   const [DataFim, setDataFim] = useState("");
+  const [error, setError] = useState(0);
+  const [sucess, setSucess] = useState(0);
+
+  
+  const handleClose = () => {
+    setError(0);
+    setSucess(0);
+  };
 
   const CreateFolga = async () => {
     // Convertendo datas para o formato exigido com milissegundos
@@ -37,6 +47,12 @@ export default function CadastroLicenciamento() {
       }
 
       const jsonResponse = await response.status;
+      if (jsonResponse === 200) {
+        setSucess(1);
+      }
+      else {
+        setError(1);
+      }
       console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar licenciamento:", error);
@@ -45,6 +61,9 @@ export default function CadastroLicenciamento() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
+
+      {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+      {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Folgas</h1>
 
@@ -57,20 +76,25 @@ export default function CadastroLicenciamento() {
             value={IdMotorista}
             onChange={(e) => setIdMotorista(e.target.value)}
           /> */}
-          <input
-            type="datetime-local"
-            className="border border-gray-300 rounded-lg p-3 w-full"
-            placeholder="Data Inicio"
-            value={DataInicio}
-            onChange={(e) => setDataInicio(e.target.value)}
-          />
-          <input
-            type="datetime-local"
-            className="border border-gray-300 rounded-lg p-3 w-full"
-            placeholder="Data Fim"
-            value={DataFim}
-            onChange={(e) => setDataFim(e.target.value)}
-          />
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">Inicio</label>
+            <input
+              type="datetime-local"
+              className="border border-gray-300 rounded-lg p-3 w-full"
+              value={DataInicio}
+              onChange={(e) => setDataInicio(e.target.value)}
+            />
+          </div>
+
+          <div>
+          <label className="block mb-2 font-medium text-gray-700">Fim</label>
+            <input
+              type="datetime-local"
+              className="border border-gray-300 rounded-lg p-3 w-full"
+              value={DataFim}
+              onChange={(e) => setDataFim(e.target.value)}
+            />
+          </div>
 
           <button
             type="button"

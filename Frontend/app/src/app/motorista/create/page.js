@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from "react";
+import AlertSucess from "@/app/components/sucess";
+import AlertError from "@/app/components/error";
 
 export default function Home() {
   const [nome, setNome] = useState("");
@@ -12,20 +14,32 @@ export default function Home() {
   const [idEscalaTrabalho, setIdEscalaTrabalho] = useState(0);
   const [cnh, setCnh] = useState("");
   const [cnhDataVencimento, setCnhDataVencimento] = useState("");
+  const [error, setError] = useState(0);
+  const [sucess, setSucess] = useState(0);
+
+  
+  const handleClose = () => {
+    setError(0);
+    setSucess(0);
+  };
+
 
   const Create = async () => {
+
+   
     const data = {
       nome: nome,
       documento: documento,
-      dataNascimento: dataNascimento,
+      dataNascimento: new Date(dataNascimento).toISOString(),
       celular: celular,
       email: email,
       statusTreinamento: statusTreinamento,
       idEscalaTrabalho: idEscalaTrabalho,
       cnh: cnh,
-      cnhDataVencimento: cnhDataVencimento,
+      cnhDataVencimento: new Date(cnhDataVencimento).toISOString(),
     };
 
+    console.log(data)
     const response = await fetch('https://localhost:5001/motorista', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -35,11 +49,20 @@ export default function Home() {
     });
 
     const jsonResponse = await response.status;
+    if (jsonResponse === 200) {
+      setSucess(1);
+    }
+    else {
+      setError(1);
+    }
     console.log(jsonResponse);
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
+
+      {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+      {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Motorista</h1>
 
@@ -110,9 +133,9 @@ export default function Home() {
               value={statusTreinamento}
               onChange={(e) => setStatusTreinamento(Number(e.target.value))}
             >  
-              <option value={0}>Cancelado</option>
-              <option value={1}>Finalizado</option>
-              <option value={2}>Em andamento</option>
+              <option value={1}>Em andamento</option>
+              <option value={2}>Finalizado</option>
+              <option value={3}>Cancelado</option>
             </select>
           </div>
 

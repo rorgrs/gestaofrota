@@ -1,23 +1,24 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
-export default function CadastroParada() {
 
-  const [Lat, setLat] = useState(0);
-  const [Lng, setLng] = useState(0);
+export default function CadastroParada() {
+  
+  const { id } = useParams();
+  const [Lat, setLat] = useState();
+  const [Lng, setLng] = useState();
   const [IbgeCidade, setIbgeCidade] = useState(0);
   const [Logradouro, setLogradouro] = useState("");
 
   const CreateParada = async () => {
 
-    const { id } = useParams();
-
     const data = {
-      Lat: Lat,
-      Lng: Lng,
-      IbgeCidade: IbgeCidade,
-      Logradouro: Logradouro
+      lat: Lat,
+      lng: Lng,
+      ibgeCidade: IbgeCidade,
+      logradouro: Logradouro
     };
 
     console.log(data);
@@ -30,7 +31,7 @@ export default function CadastroParada() {
         },
       });
 
-      const jsonResponse = await response.json();
+      const jsonResponse = await response.status;
       console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar licenciamento:", error);
@@ -52,7 +53,7 @@ export default function CadastroParada() {
             onChange={(e) => setLng(e.target.value)}
           />
           <input
-            type="date"
+            type="number"
             className="border border-gray-300 rounded-lg p-3 w-full"
             placeholder="Latitude"
             value={Lat}
@@ -61,7 +62,7 @@ export default function CadastroParada() {
           <input
             type="number"
             className="border border-gray-300 rounded-lg p-3 w-full"
-            placeholder="Data Fim"
+            placeholder="IBGE Cidade"
             value={IbgeCidade}
             onChange={(e) => setIbgeCidade(e.target.value)}
           />

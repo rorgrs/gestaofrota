@@ -46,7 +46,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Lista de Usuarios</h1>
 
           <div className="flex justify-end mb-4">
-            <Link href="/create/user" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Novo</Link>
+            <Link href="/usuarios/create" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Novo</Link>
           </div>
 
           <input 

@@ -3,6 +3,8 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import AlertSucess from "@/app/components/sucess";
+import AlertError from "@/app/components/error";
 
 export default function Users() {
     const { id } = useParams();
@@ -18,6 +20,14 @@ export default function Users() {
     const [loading, setLoading] = useState(true);
     const [cnh, setCnh] = useState("");
     const [cnhDataVencimento, setCnhDataVencimento] = useState("");
+    const [error, setError] = useState(0);
+    const [sucess, setSucess] = useState(0);
+
+    
+    const handleClose = () => {
+        setError(0);
+        setSucess(0);
+    };
 
     const fetchData = async () => {
         setLoading(true);
@@ -70,6 +80,13 @@ export default function Users() {
                 body: JSON.stringify(dataPut),
                 credentials: 'include'
             });
+            const jsonResponse = await response.status;
+            if (jsonResponse === 200) {
+                setSucess(1);
+            }
+            else {
+                setError(1);
+            }
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -84,6 +101,8 @@ export default function Users() {
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center">
+            {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+            {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}
             {loading ? (
                 <p>Carregando...</p>
             ) : (
@@ -209,7 +228,7 @@ export default function Users() {
                         </button>
                     </form>
                     
-                    <h1 className="block text-gray-700 font-medium m-2 text-center">Folgas</h1>
+                    <h2 className="text-2xl font-semibold mt-8 mb-4">Folgas</h2>
                     <div className="w-full">
                         <table className="w-full text-left border-collapse text-black">
                             <thead>

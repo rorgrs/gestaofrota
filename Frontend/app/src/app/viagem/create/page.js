@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import AlertSucess from "@/app/components/sucess";
+import AlertError from "@/app/components/error";
+
+
 
 const customIcon = new L.Icon({
   iconUrl: '/icons/pinmap.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
 });
+
 
 export default function CadastroViagem() {
   const [idVeiculo, setIdVeiculo] = useState();
@@ -23,6 +28,8 @@ export default function CadastroViagem() {
   const [origem, setOrigem] = useState(null);
   const [destino, setDestino] = useState(null);
   const [selecionandoDestino, setSelecionandoDestino] = useState(false);
+  const [error, setError] = useState(0);
+  const [sucess, setSucess] = useState(0);
 
   const CadastrarViagem = async () => {
     const data = {
@@ -46,12 +53,27 @@ export default function CadastroViagem() {
         },
       });
 
-      const jsonResponse = await response.json();
+      const jsonResponse = await response.status;
+      if (jsonResponse === 200) {
+        setSucess(1);
+      }
+      else {
+        setError(1);
+      }
+    
       console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar a viagem:", error);
     }
   };
+
+  useEffect(() => {
+    const container = document.getElementById('map');
+    if (container && container._leaflet_id) {
+      container._leaflet_id = null; // Remove ID do mapa inicializado
+    }
+  }, []);
+  
 
 
 
@@ -76,8 +98,20 @@ export default function CadastroViagem() {
     return null;
   };
 
+
+  const handleClose = () => {
+    setError(0);
+    setSucess(0);
+  };
+
+
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
+
+      {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+      {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}
+
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Viagem</h1>
         
@@ -148,17 +182,12 @@ export default function CadastroViagem() {
 
           <div>
             <h2>Selecione a Origem e Destino:</h2>
-            <MapContainer center={[-15.7797, -47.9297]} zoom={4} style={{ height: "400px", width: "100%" }}>
+            <MapContainer id="map" center={[-15.7797, -47.9297]} zoom={4} style={{ height: "400px", width: "100%" }}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {origem && <Marker position={origem} icon={customIcon}/>}
               {destino && <Marker position={destino} icon={customIcon}/>}
               <SelecionarPonto />
             </MapContainer>
-
-            <button onClick={()=>{console.log(origem)}}
-            >
-              opa
-            </button>
           </div>
 
           <button

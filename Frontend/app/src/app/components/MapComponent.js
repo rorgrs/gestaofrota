@@ -28,7 +28,7 @@ export default function MapaViagem() {
   };
 
   return (
-    <MapContainer center={[-15.7801, -47.9292]} zoom={4} style={{ height: '500px', width: '100%' }}>
+    <MapContainer  center={[-15.7801, -47.9292]} zoom={4} style={{ height: '500px', width: '100%' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; OpenStreetMap contributors"
