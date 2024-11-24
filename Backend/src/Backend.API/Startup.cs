@@ -15,6 +15,8 @@ using Backend.API.Middlewares;
 using Backend.Application.Services;
 using Backend.Domain.Repositories;
 using Backend.Infrastructure.Database.Context;
+using Backend.Infrastructure.Helpers;
+using Backend.Infrastructure.Helpers.Interface;
 using Backend.Infrastructure.Repositories;
 
 namespace Backend.API;
@@ -61,6 +63,32 @@ public class Startup
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend.API", Version = "v1" });
+            
+            // Configuração do esquema de segurança
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Insira o token JWT no formato: Bearer {seu token}"
+            });
+            
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
     }
 
@@ -93,22 +121,25 @@ public class Startup
     private static void ConfigureDepdendencyInjection(IServiceCollection services)
     {
         services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
-        services.AddScoped(typeof(IMotoristaService), typeof(MotoristaService));
-        services.AddScoped(typeof(IUsuarioService), typeof(UsuarioService));
-        services.AddScoped(typeof(IVeiculoService), typeof(VeiculoService));
-        services.AddScoped(typeof(IViagemService), typeof(ViagemService));
+        services.AddScoped<IMotoristaService, MotoristaService>();
+        services.AddScoped<IUsuarioService, UsuarioService>();
+        services.AddScoped<IVeiculoService, VeiculoService>();
+        services.AddScoped<IViagemService, ViagemService>();
         
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-        services.AddScoped(typeof(IMotoristaRepository), typeof(MotoristaRepository));
-        services.AddScoped(typeof(IMotoristaCarteiraRepository), typeof(MotoristaCarteiraRepository));
-        services.AddScoped(typeof(IMotoristaFolgaRepository), typeof(MotoristaFolgaRepository));
-        services.AddScoped(typeof(IMotoristaFolgaRepository), typeof(MotoristaFolgaRepository));
-        services.AddScoped(typeof(IMotoristaEscalaTrabalhoRepository), typeof(MotoristaEscalaTrabalhoRepository));
-        services.AddScoped(typeof(IVeiculoRepository), typeof(VeiculoRepository));
-        services.AddScoped(typeof(IVeiculoManutencaoRepository), typeof(VeiculoManutencaoRepository));
-        services.AddScoped(typeof(IVeiculoLicenciamentoRepository), typeof(VeiculoLicenciamentoRepository));
-        services.AddScoped(typeof(IViagemRepository), typeof(ViagemRepository));
-        services.AddScoped(typeof(IViagemParadaRepository), typeof(ViagemParadaRepository));
-        services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
+        services.AddScoped<IMotoristaRepository, MotoristaRepository>();
+        services.AddScoped<IMotoristaCarteiraRepository, MotoristaCarteiraRepository>();
+        services.AddScoped<IMotoristaFolgaRepository, MotoristaFolgaRepository>();
+        services.AddScoped<IMotoristaFolgaRepository, MotoristaFolgaRepository>();
+        services.AddScoped<IMotoristaEscalaTrabalhoRepository, MotoristaEscalaTrabalhoRepository>();
+        services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+        services.AddScoped<IVeiculoManutencaoRepository, VeiculoManutencaoRepository>();
+        services.AddScoped<IVeiculoLicenciamentoRepository, VeiculoLicenciamentoRepository>();
+        services.AddScoped<IViagemRepository, ViagemRepository>();
+        services.AddScoped<IViagemParadaRepository, ViagemParadaRepository>();
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        
+        services.AddScoped<IAuthHelper, AuthHelper>();
+        services.AddScoped<IUserContext, UserContext>();
     }
 }

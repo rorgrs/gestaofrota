@@ -3,6 +3,7 @@ using Backend.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Backend.API.Middlewares;
 using Backend.Domain.DTOs.Motorista;
 
 namespace Backend.API.Controllers;
@@ -18,6 +19,7 @@ public class MotoristaController : ControllerBase
         _motoristaService = motoristaService;
     }
 
+    [ValidateToken]
     [HttpGet]
     public async Task<ActionResult<List<MotoristaResponse>>> GetAll()
     {
@@ -32,6 +34,7 @@ public class MotoristaController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpGet("{id}")]
     public async Task<ActionResult<MotoristaResponse>> Get(int id)
     {
@@ -46,6 +49,7 @@ public class MotoristaController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpPost]
     public async Task<ActionResult<MotoristaResponse>> Add([FromBody] MotoristaRequest request)
     {
@@ -60,6 +64,7 @@ public class MotoristaController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpPut("{id}")]
     public async Task<ActionResult<MotoristaResponse>> Edit(int id, [FromBody] MotoristaRequest request)
     {
@@ -74,6 +79,7 @@ public class MotoristaController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpPost("{id}/folga")]
     public async Task<ActionResult> AddFolga(int id, [FromBody] MotoristaFolgaRequest request)
     {

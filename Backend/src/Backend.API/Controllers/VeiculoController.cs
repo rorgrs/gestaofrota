@@ -3,6 +3,7 @@ using Backend.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Backend.API.Middlewares;
 using Backend.Domain.DTOs.Veiculo;
 
 namespace Backend.API.Controllers;
@@ -18,6 +19,7 @@ public class VeiculoController : ControllerBase
         _veiculoService = veiculoService;
     }
 
+    [ValidateToken]
     [HttpGet]
     public async Task<ActionResult<List<VeiculoResponse>>> GetAll()
     {
@@ -32,6 +34,7 @@ public class VeiculoController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpGet("{id}")]
     public async Task<ActionResult<VeiculoResponse>> Get(int id)
     {
@@ -46,6 +49,7 @@ public class VeiculoController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpPost]
     public async Task<ActionResult<VeiculoResponse>> Save([FromBody] VeiculoRequest request)
     {
@@ -60,6 +64,7 @@ public class VeiculoController : ControllerBase
         }
     }
     
+    [ValidateToken]
     [HttpPut("{id}")]
     public async Task<ActionResult<VeiculoResponse>> Edit(int id, [FromBody] VeiculoRequest request)
     {
@@ -74,6 +79,7 @@ public class VeiculoController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpPost("{id}/licenciamento")]
     public async Task<ActionResult> AddLicenciamento(int id, [FromBody] VeiculoLicenciamentoRequest request)
     {
@@ -88,6 +94,7 @@ public class VeiculoController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpPost("{id}/manutencao")]
     public async Task<ActionResult> AddManutencao(int id, [FromBody] VeiculoManutencaoRequest request)
     {

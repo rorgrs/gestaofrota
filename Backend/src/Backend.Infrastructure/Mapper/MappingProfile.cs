@@ -52,6 +52,7 @@ public class MappingProfile : Profile
         CreateMap<ViagemResponse, Viagem>().ReverseMap();
         CreateMap<ViagemVeiculoResponse, Veiculo>().ReverseMap();
         CreateMap<ViagemParadaResponse, ViagemParada>().ReverseMap();
+        CreateMap<ViagemParadaRequest, ViagemParada>().ReverseMap();
 
         #endregion
     }

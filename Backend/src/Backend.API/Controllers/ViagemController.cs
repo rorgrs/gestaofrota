@@ -3,6 +3,7 @@ using Backend.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Backend.API.Middlewares;
 using Backend.Domain.DTOs.Viagem;
 
 namespace Backend.API.Controllers;
@@ -18,6 +19,7 @@ public class ViagemController : ControllerBase
         _viagemService = viagemService;
     }
 
+    [ValidateToken]
     [HttpGet]
     public async Task<ActionResult<List<ViagemResponse>>> GetAll()
     {
@@ -32,6 +34,7 @@ public class ViagemController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpGet("{id}")]
     public async Task<ActionResult<ViagemResponse>> Get(int id)
     {
@@ -46,6 +49,7 @@ public class ViagemController : ControllerBase
         }
     }
 
+    [ValidateToken]
     [HttpPost]
     public async Task<ActionResult<ViagemResponse>> Save([FromBody] ViagemRequest request)
     {
@@ -60,7 +64,7 @@ public class ViagemController : ControllerBase
         }
     }
     
-
+    [ValidateToken]
     [HttpPost("{id}/parada")]
     public async Task<ActionResult> AddParada(int id, [FromBody] ViagemParadaRequest request)
     {
@@ -75,6 +79,7 @@ public class ViagemController : ControllerBase
         }
     }
     
+    [ValidateToken]
     [HttpPut("{id}")]
     public async Task<ActionResult<ViagemResponse>> Edit(int id, [FromBody] ViagemRequest request)
     {

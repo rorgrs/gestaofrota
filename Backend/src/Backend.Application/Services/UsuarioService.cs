@@ -6,28 +6,58 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Backend.Domain.DTOs.Usuario;
 using Backend.Domain.Repositories;
+using Backend.Infrastructure.Helpers.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Application.Services;
 
 public class UsuarioService : BaseService<Usuario>, IUsuarioService
 {
-    public UsuarioService(IMapper mapper, IUsuarioRepository repository) : base(mapper, repository)
+    private readonly IAuthHelper _authHelper;
+    
+    public UsuarioService(IMapper mapper, IUsuarioRepository repository, IAuthHelper authHelper) : base(mapper, repository)
     {
+        _authHelper = authHelper;
     }
 
     public async Task<UsuarioResponse> Save(UsuarioRequest request)
     {
         if (await Repository.ExistAsync(c => c.Documento == request.Documento))
             throw new InvalidOperationException("Documento repetido.");
+        
+        if(string.IsNullOrWhiteSpace(request.Senha))
+            throw new InvalidOperationException("Senha não informada.");
 
         var entity = Mapper.Map<Usuario>(request);
         entity.DataCadastro = DateTime.Now;
+        entity.Senha = request.Senha;
 
         await Repository.AddAsync(entity);
         await Repository.SaveAsync();
 
         return Mapper.Map<UsuarioResponse>(entity);
+    }
+
+    public async Task<UsuarioLoginResponse> Login(UsuarioLoginRequest request)
+    {
+        var usuario = await Repository
+            .GetAll(c => c.Login == request.Login && c.Senha == request.Senha)
+            .FirstOrDefaultAsync();
+
+        if (usuario == null)
+            throw new InvalidOperationException("Dados inválidos.");
+
+        var token = _authHelper.GenerateJwtToken(usuario.Id, usuario.Documento);
+
+        return new UsuarioLoginResponse()
+        {
+            Documento = usuario.Documento,
+            Id = usuario.Id,
+            Login = usuario.Login,
+            Nome = usuario.Nome,
+            Token = token,
+            ExpiresIn = _authHelper.GetExpiresInSeconds()
+        };
     }
     
     public async Task<UsuarioResponse> Edit(int id, UsuarioRequest request)
