@@ -230,20 +230,30 @@ export default function Vehicle() {
 
                     <h2 className="text-2xl font-semibold mt-8 mb-4">Manutenções</h2>
                     {manutencoes.length > 0 ? (
-                        <ul className="list-disc pl-5">
-                            {manutencoes.map((manutencao, index) => (
+                    <ul className="list-disc pl-5">
+                        {manutencoes.map((manutencao, index) => {
+                            // Mapeamento dos tipos de manutenção
+                            const tiposDeManutencao = {
+                                1: "Preventiva",
+                                2: "Corretiva",
+                                3: "Preditiva",
+                                // Adicione outros tipos conforme necessário
+                            };
+
+                            return (
                                 <li key={index} className="mb-2">
-                                    Tipo: {manutencao.tipo} <br />
+                                    Tipo: {tiposDeManutencao[manutencao.tipo] || "Desconhecido"} <br />
                                     Data Início: {new Date(manutencao.dataInicio).toLocaleDateString()} <br />
                                     Data Fim: {manutencao.dataFim ? new Date(manutencao.dataFim).toLocaleDateString() : 'N/A'} <br />
                                     Observação: {manutencao.observacao || 'N/A'} <br />
                                     Diagnóstico: {manutencao.diagnostico || 'N/A'} <br />
                                 </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p className="text-gray-500">Nenhuma manutenção encontrada.</p>
-                    )}
+                            );
+                        })}
+                    </ul>
+                ) : (
+                    <p className="text-gray-500">Nenhuma manutenção encontrada.</p>
+                )}
 
 
                     <h2 className="text-2xl font-semibold mt-8 mb-4">Licenciamentos</h2>
@@ -251,7 +261,6 @@ export default function Vehicle() {
                         <ul className="list-disc pl-5">
                             {licenciamentos.map((licenciamento, index) => (
                                 <li key={index} className="mb-2">
-                                    Tipo: {licenciamento.tipo} <br />
                                     Data Emissão: {licenciamento.dataEmissao ? new Date(licenciamento.dataEmissao).toLocaleDateString() : 'N/A'} <br />
                                     Data Validade: {licenciamento.dataValidade ? new Date(licenciamento.dataValidade).toLocaleDateString() : 'N/A'} <br />
                                     Data Vencimento: {licenciamento.dataVencimento ? new Date(licenciamento.dataVencimento).toLocaleDateString() : 'N/A'} <br />

@@ -78,6 +78,11 @@ export default function CadastroVeiculo() {
     }
   };
 
+  const handleClose = () => {
+    setError(0);
+    setSucess(0);
+  };
+  
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
       <Aside></Aside>

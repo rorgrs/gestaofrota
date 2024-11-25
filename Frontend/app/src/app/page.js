@@ -73,14 +73,14 @@ export default function Home() {
         />
 
         <input 
-          type="text" 
+          type="password" 
+          placeholder="password"
           className="border border-gray-300 rounded-lg p-3 mb-4 w-full"
-          placeholder="Password" 
           value={password}
           onChange={(e) => SetPassword(e.target.value)}
         />
 
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={Enter}>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded justify-center" onClick={Enter}>
             Login
         </button>
         </div>

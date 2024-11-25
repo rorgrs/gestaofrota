@@ -15,6 +15,7 @@ public class ViagemResponse
     public required double LngDestino { get; set; }
     public required int IbgeCidadeDestino { get; set; }
     public required string LogradouroDestino { get; set; }
+    public string? MotoristaNome { get; set; }
 }
 
 public class ViagemVeiculoResponse

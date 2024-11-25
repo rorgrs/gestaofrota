@@ -26,23 +26,90 @@ export default function Home() {
       const data = await response.json();
       setDados(data);
       setFilteredData(data);
-
+      console.log(data)
       // Após carregar os dados, busca os endereços (origem e destino)
-      const enderecosMap = await fetchAllAddresses(data);
-      setEnderecos(enderecosMap);
+      // const enderecosMap = await fetchAllAddresses(data);
+      const ibgeMap = await fetchAllIbge(data);
+      setEnderecos(ibgeMap);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // Função para buscar origem/destino de todas as viagens
-  const fetchAllAddresses = async (viagens) => {
+  // // Função para buscar origem/destino de todas as viagens
+  // const fetchAllAddresses = async (viagens) => {
+  //   const enderecosMap = {};
+
+  //   // Cria promessas para buscar todos os endereços
+  //   const promessas = viagens.map(async (viagem) => {
+  //     const origem = await fetchAddress(viagem.latOrigem, viagem.lngOrigem);
+  //     const destino = await fetchAddress(viagem.latDestino, viagem.lngDestino);
+
+  //     enderecosMap[viagem.id] = {
+  //       origem: origem || "Não encontrado",
+  //       destino: destino || "Não encontrado",
+  //     };
+  //   });
+
+  //   // Aguarda todas as requisições terminarem
+  //   await Promise.all(promessas);
+
+  //   return enderecosMap;
+  // };
+
+  // Função para buscar um endereço baseado em lat/lng
+  // const fetchAddress = async (lat, lon) => {
+  //   console.log(lat, lon)
+  //   try {
+  //     const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+  //     const response = await fetch(url);
+  //     if (!response.ok) throw new Error("Falha ao buscar endereço");
+
+  //     const data = await response.json();
+  //     const endereco = {
+  //           municipality: data.address.municipality,
+  //           state: data.address.state,
+  //           postcode: data.address.postcode,
+  //           country: data.address.country
+  //     }
+  //     return `${endereco.municipality || ''}, ${endereco.postcode || ''},  ${endereco.state || ''} - ${endereco.country || ''}`;
+  //   } catch (error) {
+  //     console.error(`Erro ao buscar endereço para (${lat}, ${lon}):`, error);
+  //     return null;
+  //   }
+  // };
+
+
+  const fetchIbge = async (ibge) => {
+    console.log(ibge)
+    
+    try {
+      const url = `https://servicodados.ibge.gov.br/api/v1/localidades/municipios/${ibge}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Falha ao buscar endereço");
+
+      const data = await response.json();
+      console.log(data)
+      if(Array.isArray(data) && !data.length) return "Não encontrado"
+      const endereco = {
+            nome: data.nome,
+            sigla: data.microrregiao.mesorregiao.UF.sigla
+      }
+      return `${endereco.nome || ''}, ${endereco.sigla || ''}`;
+    } catch (error) {
+      console.error(`Erro ao buscar endereço`, error);
+      return null;
+    }
+  };
+
+   // Função para buscar origem/destino de todas as viagens
+   const fetchAllIbge = async (viagens) => {
     const enderecosMap = {};
 
     // Cria promessas para buscar todos os endereços
     const promessas = viagens.map(async (viagem) => {
-      const origem = await fetchAddress(viagem.latOrigem, viagem.lngOrigem);
-      const destino = await fetchAddress(viagem.latDestino, viagem.lngDestino);
+      const origem = await fetchIbge(viagem.ibgeCidadeOrigem);
+      const destino = await fetchIbge(viagem.ibgeCidadeDestino);
 
       enderecosMap[viagem.id] = {
         origem: origem || "Não encontrado",
@@ -54,27 +121,6 @@ export default function Home() {
     await Promise.all(promessas);
 
     return enderecosMap;
-  };
-
-  // Função para buscar um endereço baseado em lat/lng
-  const fetchAddress = async (lat, lon) => {
-    try {
-      const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
-      const response = await fetch(url);
-      if (!response.ok) throw new Error("Falha ao buscar endereço");
-
-      const data = await response.json();
-      const endereco = {
-            municipality: data.address.municipality,
-            state: data.address.state,
-            postcode: data.address.postcode,
-            country: data.address.country
-      }
-      return `${endereco.municipality || ''}, ${endereco.postcode || ''},  ${endereco.state || ''} - ${endereco.country || ''}`;
-    } catch (error) {
-      console.error(`Erro ao buscar endereço para (${lat}, ${lon}):`, error);
-      return null;
-    }
   };
 
   useEffect(() => {
@@ -131,7 +177,7 @@ export default function Home() {
               {filteredData.map((item) => (
                 <tr key={item.id} className="hover:bg-blue-50">
                   <td className="border-b p-4">{item.id}</td>
-                  <td className="border-b p-4">{item.veiculo.modelo}</td>
+                  <td className="border-b p-4">{item.motoristaNome}</td>
                   <td className="border-b p-4">{item.veiculo.placa}</td>
                   <td className="border-b p-4">
                     {enderecos[item.id]?.origem || "Carregando..."} 

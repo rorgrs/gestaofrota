@@ -68,7 +68,8 @@ public class ViagemService : BaseService<Viagem>, IViagemService
 
     public async Task<List<ViagemResponse>> GetAll()
     {
-        var viagem = await Repository.GetAll().Include(c => c.Veiculo).ToListAsync();
+        var viagem = await Repository.GetAll().Include(c => c.Veiculo)
+            .ThenInclude(c => c.Motorista).ToListAsync();
         var list = Mapper.Map<List<ViagemResponse>>(viagem);
         return list;
     }

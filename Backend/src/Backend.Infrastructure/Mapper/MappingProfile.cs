@@ -49,7 +49,8 @@ public class MappingProfile : Profile
         #region Viagem
         
         CreateMap<ViagemRequest, Viagem>().ReverseMap();
-        CreateMap<ViagemResponse, Viagem>().ReverseMap();
+        CreateMap<ViagemResponse, Viagem>().ReverseMap()
+            .ForMember(c => c.MotoristaNome, opts => opts.MapFrom(c => c.Veiculo.Motorista.Nome));
         CreateMap<ViagemVeiculoResponse, Veiculo>().ReverseMap();
         CreateMap<ViagemParadaResponse, ViagemParada>().ReverseMap();
         CreateMap<ViagemParadaRequest, ViagemParada>().ReverseMap();

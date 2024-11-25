@@ -18,6 +18,10 @@ export default function CadastroManutencao() {
   const [error, setError] = useState(0);
   const [sucess, setSucess] = useState(0);
 
+  useEffect(() => {
+    verify();
+  });
+
   const CreateManutencao = async () => {
     const DataInicioISO = new Date(dataInicio).toISOString();
     const DataFimISO = dataFim ? new Date(dataFim).toISOString() : null;
@@ -31,10 +35,6 @@ export default function CadastroManutencao() {
     };
 
     console.log(data);
-
-    useEffect(() => {
-      verify();
-    });
 
     try {
       const response = await fetch(`https://localhost:5001/veiculo/${id}/manutencao`, {
