@@ -94,6 +94,7 @@ export default function Users() {
         if (id) {
             verify();
             fetchData();
+            setLoading(true)
         }
     }, [id]);
 

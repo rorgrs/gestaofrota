@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import verify from "@/app/functions/verify";
 import Aside from "@/app/components/aside";
+import AlertError from "@/app/components/error";
+import AlertSucess from "@/app/components/sucess";
 
 export default function Vehicle() {
     const { id } = useParams();
@@ -17,6 +19,8 @@ export default function Vehicle() {
     const [loading, setLoading] = useState(true);
     const [manutencoes, setManutencoes] = useState([]);
     const [licenciamentos, setLicenciamentos] = useState([]);
+    const [error, setError] = useState(0);
+    const [sucess, setSucess] = useState(0);
 
     const fetchData = async () => {
         setLoading(true);
@@ -81,8 +85,15 @@ export default function Vehicle() {
         }
     }, [id]);
 
+    const handleClose = () => {
+        setError(0);
+        setSucess(0);
+      };
+
     return (
         <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
+            {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+            {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}
             <Aside></Aside>
             {loading ? (
                 <p>Carregando...</p>
@@ -100,48 +111,114 @@ export default function Vehicle() {
                         </Link>
                     </div>
                     <form className="space-y-6">
-                        <input
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Placa</label>
+                            <input
+                            type="text"
+                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            value={placa}
+                            onChange={(e) => setPlaca(e.target.value)}
+                        />
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Marca</label>
+                            <input
+                            type="text"
+                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            value={marca}
+                            onChange={(e) => setMarca(e.target.value)}
+                        />
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Modelo</label>
+                            <input
+                            type="text"
+                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            value={modelo}
+                            onChange={(e) => setModelo(e.target.value)}
+                        />
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Cor</label>
+                            <input
+                            type="text"
+                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            value={cor}
+                            onChange={(e) => setCor(e.target.value)}
+                        />
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Km/L</label>
+                            <input
+                            type="number"
+                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            value={kmLitro}
+                            onChange={(e) => setKmLitro(Number(e.target.value))}
+                        />   
+                        </div>
+
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-2">Ano</label>
+                            <input
+                            type="number"
+                            className="border border-gray-300 rounded-lg p-3 w-full"
+                            value={ano}
+                            onChange={(e) => setAno(Number(e.target.value))}
+                        />   
+                        </div>
+
+
+                        {/* <input
                             type="text"
                             className="border border-gray-300 rounded-lg p-3 w-full"
                             placeholder="Placa"
                             value={placa}
                             onChange={(e) => setPlaca(e.target.value)}
-                        />
-                        <input
+                        /> */}
+
+                        {/* <input
                             type="text"
                             className="border border-gray-300 rounded-lg p-3 w-full"
                             placeholder="Marca"
                             value={marca}
                             onChange={(e) => setMarca(e.target.value)}
-                        />
-                        <input
+                        /> */}
+
+
+                        {/* <input
                             type="text"
                             className="border border-gray-300 rounded-lg p-3 w-full"
                             placeholder="Modelo"
                             value={modelo}
                             onChange={(e) => setModelo(e.target.value)}
-                        />
-                        <input
+                        /> */}
+                        {/* <input
                             type="text"
                             className="border border-gray-300 rounded-lg p-3 w-full"
                             placeholder="Cor"
                             value={cor}
                             onChange={(e) => setCor(e.target.value)}
-                        />
-                        <input
+                        /> */}
+                        {/* <input
                             type="number"
                             className="border border-gray-300 rounded-lg p-3 w-full"
                             placeholder="KM/L"
                             value={kmLitro}
                             onChange={(e) => setKmLitro(Number(e.target.value))}
-                        />
-                        <input
+                        /> */}
+                        {/* <input
                             type="number"
                             className="border border-gray-300 rounded-lg p-3 w-full"
                             placeholder="Ano"
                             value={ano}
                             onChange={(e) => setAno(Number(e.target.value))}
-                        />
+                        /> */}
+
                         <button
                             type="button"
                             onClick={putData}
