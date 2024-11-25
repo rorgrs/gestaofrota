@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import AlertSucess from "@/app/components/sucess";
 import AlertError from "@/app/components/error";
+import verify from "@/app/functions/verify";
 
 export default function CadastroLicenciamento() {
   const { id } = useParams();
@@ -13,6 +14,9 @@ export default function CadastroLicenciamento() {
   const [error, setError] = useState(0);
   const [sucess, setSucess] = useState(0);
 
+  useEffect(()=>{
+    verify();
+  },[]);
   
   const handleClose = () => {
     setError(0);
@@ -37,6 +41,7 @@ export default function CadastroLicenciamento() {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
+          'Authorization': localStorage.getItem('token')
         },
       });
 

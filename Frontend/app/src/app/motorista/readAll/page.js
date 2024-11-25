@@ -1,6 +1,7 @@
 'use client';
 
 import Aside from "@/app/components/aside";
+import verify from "@/app/functions/verify";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -13,13 +14,13 @@ export default function Home() {
 
   const fetchData = async () => {
   
-
     try {
       const response = await fetch('https://localhost:5001/motorista', {
         method: 'GET',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
         }
       });
       const data = await response.json();
@@ -48,6 +49,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    verify();
     fetchData();
   }, []);
   

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import AlertSucess from "@/app/components/sucess";
 import AlertError from "@/app/components/error";
+import verify from "@/app/functions/verify";
 
 export default function Users() {
     const { id } = useParams();
@@ -37,6 +38,7 @@ export default function Users() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
                 },
                 credentials: 'include'
             });
@@ -76,6 +78,7 @@ export default function Users() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
                 },
                 body: JSON.stringify(dataPut),
                 credentials: 'include'
@@ -95,6 +98,7 @@ export default function Users() {
 
     useEffect(() => {
         if (id) {
+            verify();
             fetchData();
         }
     }, [id]);

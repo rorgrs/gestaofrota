@@ -1,6 +1,7 @@
 'use client';
 
 import Aside from "@/app/components/aside";
+import verify from "@/app/functions/verify";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,6 +19,7 @@ export default function Home() {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': localStorage.getItem('token')
         },
       });
 
@@ -76,6 +78,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    verify();
     fetchData();
   }, []);
 

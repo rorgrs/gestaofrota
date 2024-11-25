@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AlertSucess from "@/app/components/sucess";
 import AlertError from "@/app/components/error";
+import verify from "@/app/functions/verify";
 
 export default function Home() {
   const [nome, setNome] = useState("");
@@ -22,6 +23,11 @@ export default function Home() {
     setError(0);
     setSucess(0);
   };
+
+  useEffect(()=>{
+      verify();
+  })
+
 
 
   const Create = async () => {
@@ -45,6 +51,7 @@ export default function Home() {
       body: JSON.stringify(data),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': localStorage.getItem('token')
       },
     });
 

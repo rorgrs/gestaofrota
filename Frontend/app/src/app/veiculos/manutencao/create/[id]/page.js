@@ -1,7 +1,8 @@
 "use client";
 
+import verify from "@/app/functions/verify";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CadastroManutencao() {
   const {id} = useParams();
@@ -26,12 +27,18 @@ export default function CadastroManutencao() {
     };
 
     console.log(data);
+
+    useEffect(()=>{
+      verify();
+    })
+
     try {
       const response = await fetch(`https://localhost:5001/veiculo/${id}/manutencao`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
+          'Authorization': localStorage.getItem('token')
         },
       });
 

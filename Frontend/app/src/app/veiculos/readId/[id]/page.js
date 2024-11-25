@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import verify from "@/app/functions/verify";
 
 export default function Vehicle() {
     const { id } = useParams();
@@ -24,6 +25,7 @@ export default function Vehicle() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
                 },
                 credentials: 'include'
             });
@@ -60,6 +62,7 @@ export default function Vehicle() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
                 },
                 body: JSON.stringify(dataPut),
                 credentials: 'include'
@@ -72,6 +75,7 @@ export default function Vehicle() {
 
     useEffect(() => {
         if (id) {
+            verify();
             fetchData();
         }
     }, [id]);

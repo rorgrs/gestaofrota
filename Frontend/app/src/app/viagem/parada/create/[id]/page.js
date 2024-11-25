@@ -1,16 +1,33 @@
 "use client";
 
+import Aside from "@/app/components/aside";
+import verify from "@/app/functions/verify";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 
 export default function CadastroParada() {
   
   const { id } = useParams();
-  const [Lat, setLat] = useState();
-  const [Lng, setLng] = useState();
+  const [Lat, setLat] = useState(0);
+  const [Lng, setLng] = useState(0);
   const [IbgeCidade, setIbgeCidade] = useState(0);
   const [Logradouro, setLogradouro] = useState("");
+  const [origem, setOrigem] = useState(null);
+  const [destino, setDestino] = useState(null);
+
+  const SelecionarPonto = () => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng;
+          setLat(lat);
+          setLng(lng);      
+      }
+    });
+    return null;
+  };
 
   const CreateParada = async () => {
 
@@ -28,6 +45,7 @@ export default function CadastroParada() {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
+          'Authorization': localStorage.getItem('token')
         },
       });
 
@@ -38,8 +56,17 @@ export default function CadastroParada() {
     }
   };
 
+  useEffect(()=>{
+    verify();
+    const container = document.getElementById('map');
+    if (container && container._leaflet_id) {
+      container._leaflet_id = null; // Remove ID do mapa inicializado
+    }
+  },[])
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
+      <Aside></Aside>
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Paradas</h1>
 
@@ -59,13 +86,13 @@ export default function CadastroParada() {
             value={Lat}
             onChange={(e) => setLat(e.target.value)}
           />
-          <input
+          {/* <input
             type="number"
             className="border border-gray-300 rounded-lg p-3 w-full"
             placeholder="IBGE Cidade"
             value={IbgeCidade}
             onChange={(e) => setIbgeCidade(e.target.value)}
-          />
+          /> */}
 
           <input
             type="text"
@@ -74,6 +101,16 @@ export default function CadastroParada() {
             value={Logradouro}
             onChange={(e) => setLogradouro(e.target.value)}
           />
+
+         <div>
+            <h2>Selecione a Origem e Destino:</h2>
+            <MapContainer id="map" center={[-15.7797, -47.9297]} zoom={4} style={{ height: "400px", width: "100%" }}>
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              {origem && <Marker position={origem} icon={customIcon}/>}
+              {destino && <Marker position={destino} icon={customIcon}/>}
+              <SelecionarPonto />
+            </MapContainer>
+          </div>
 
           <button
             type="button"

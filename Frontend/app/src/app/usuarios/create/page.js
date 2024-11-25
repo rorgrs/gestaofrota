@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import AlertSucess from "@/app/components/sucess";
 import AlertError from "@/app/components/error";
+import verify from "@/app/functions/verify";
 
 
 export default function Home() {
@@ -15,6 +16,9 @@ export default function Home() {
   const [error, setError] = useState(0);
   const [sucess, setSucess] = useState(0);
 
+  useEffect(()=>{
+    verify();
+  },[]);
   
   const handleClose = () => {
     setError(0);
@@ -37,6 +41,7 @@ export default function Home() {
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
+          'Authorization': localStorage.getItem('token')
         },
       });
 
