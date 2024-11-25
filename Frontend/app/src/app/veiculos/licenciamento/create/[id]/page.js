@@ -1,5 +1,6 @@
 "use client";
 
+import Aside from "@/app/components/aside";
 import verify from "@/app/functions/verify";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -47,7 +48,8 @@ export default function CadastroLicenciamento() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
+      <Aside></Aside>
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Licenciamento</h1>
 

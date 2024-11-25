@@ -52,12 +52,12 @@ public class Startup
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                   builder => builder
-                    .WithOrigins(client)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials()
-                  );
+                    builder => builder
+                        .WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                );
             });
 
         services.AddSwaggerGen(c =>

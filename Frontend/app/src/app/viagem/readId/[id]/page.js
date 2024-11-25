@@ -191,7 +191,7 @@ export default function Viagem() {
 
 
     return (
-        <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex">
+        <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
             <Aside></Aside> 
             {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
             {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}

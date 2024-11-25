@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AlertSucess from "@/app/components/sucess";
 import AlertError from "@/app/components/error";
 import verify from "@/app/functions/verify";
+import Aside from "@/app/components/aside";
 
 export default function Home() {
   const [nome, setNome] = useState("");
@@ -66,7 +67,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center text-black">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
+      <Aside></Aside>
 
       {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
       {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose}  />}

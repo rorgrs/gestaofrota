@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import verify from "@/app/functions/verify";
+import Aside from "@/app/components/aside";
 
 export default function Vehicle() {
     const { id } = useParams();
@@ -81,10 +82,12 @@ export default function Vehicle() {
     }, [id]);
 
     return (
-        <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-8 flex items-center justify-center">
+        <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
+            <Aside></Aside>
             {loading ? (
                 <p>Carregando...</p>
             ) : (
+                
                 <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg text-black">
                     <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Atualização Veículo</h1>
                     <div className="flex justify-end mb-6">

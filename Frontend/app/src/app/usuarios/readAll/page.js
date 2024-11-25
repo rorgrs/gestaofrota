@@ -41,7 +41,7 @@ export default function Home() {
   }, [searchTerm, dados]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
       <Aside></Aside>
 
       <div className="w-3/4 p-8 ml-0">

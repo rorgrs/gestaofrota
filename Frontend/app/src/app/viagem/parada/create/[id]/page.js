@@ -6,6 +6,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import AlertError from "@/app/components/error";
+import AlertSucess from "@/app/components/sucess";
 
 
 export default function CadastroParada() {
@@ -17,6 +19,8 @@ export default function CadastroParada() {
   const [Logradouro, setLogradouro] = useState("");
   const [origem, setOrigem] = useState(null);
   const [destino, setDestino] = useState(null);
+  const [error, setError] = useState(0);
+  const [sucess, setSucess] = useState(0);
 
   const SelecionarPonto = () => {
     useMapEvents({
@@ -50,6 +54,11 @@ export default function CadastroParada() {
       });
 
       const jsonResponse = await response.status;
+      if (jsonResponse === 200) {
+        setSucess(1);
+      } else {
+        setError(1);
+      }
       console.log(jsonResponse);
     } catch (error) {
       console.error("Erro ao cadastrar licenciamento:", error);
@@ -64,9 +73,16 @@ export default function CadastroParada() {
     }
   },[])
 
+  const handleClose = () => {
+    setError(0);
+    setSucess(0);
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
       <Aside></Aside>
+      {error === 1 && <AlertError message={"Ocorreu um erro"} onClose={handleClose} />}
+      {sucess === 1 && <AlertSucess message={"Operação Concluída com sucesso"} onClose={handleClose} />}
       <div className="container max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Cadastro de Paradas</h1>
 

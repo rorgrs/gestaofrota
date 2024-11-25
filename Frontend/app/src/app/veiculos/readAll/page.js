@@ -43,7 +43,7 @@ export default function Home() {
   }, [searchTerm, dados]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex text-black">
       <Aside></Aside>
 
       <div className="w-3/4 p-8 ml-0">
@@ -51,7 +51,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Lista de Veículos</h1>
 
           <div className="flex justify-end mb-4">
-            <Link href="/create/veiculo" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Novo</Link>
+            <Link href="/veiculos/create" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Novo</Link>
           </div>
 
           <input 
